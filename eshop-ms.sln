@@ -5,12 +5,10 @@ VisualStudioVersion = 17.10.34902.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Item", "Solutions Item", "{4511B111-4417-47AE-83C0-FCFA72A08FFD}"
 	ProjectSection(SolutionItems) = preProject
-		Solutions Item\Directory.Packages.props = Solutions Item\Directory.Packages.props
 		Solutions Item\Document.txt = Solutions Item\Document.txt
-		Solutions Item\NuGet.config = Solutions Item\NuGet.config
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{775683EB-3E45-428A-8C82-F11873950D83}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaged", "Packaged", "{775683EB-3E45-428A-8C82-F11873950D83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{FC4CE5CB-13F5-484B-8E82-B8A000057C4E}"
 EndProject
@@ -38,7 +36,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NoSqlPackage", "NoSqlPackag
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlPackage", "SqlPackage", "{A2E798FF-2F2B-4EB9-9D43-A9D423010E6E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{782DD822-E76E-4093-81FA-884CBFA242CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseIntegrated", "Packaged\BasePackage\BaseIntegrated\BaseIntegrated.csproj", "{58764235-F878-4722-99B8-34BC354155A5}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58764235-F878-4722-99B8-34BC354155A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58764235-F878-4722-99B8-34BC354155A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58764235-F878-4722-99B8-34BC354155A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58764235-F878-4722-99B8-34BC354155A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
@@ -55,6 +67,8 @@ Global
 		{905FBBA1-0F24-42FC-9711-41D839FFE5F2} = {97C445BB-8C78-4A70-9428-6A9F0E53F62C}
 		{0605B91F-5440-4E1F-BA4D-5C3328961193} = {97C445BB-8C78-4A70-9428-6A9F0E53F62C}
 		{A2E798FF-2F2B-4EB9-9D43-A9D423010E6E} = {97C445BB-8C78-4A70-9428-6A9F0E53F62C}
+		{782DD822-E76E-4093-81FA-884CBFA242CD} = {FC4CE5CB-13F5-484B-8E82-B8A000057C4E}
+		{58764235-F878-4722-99B8-34BC354155A5} = {A10D15F0-A480-4A3E-89F8-56EE762BAA3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D91077-3225-4913-85BD-F374291667F4}
