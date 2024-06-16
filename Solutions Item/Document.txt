@@ -1,0 +1,277 @@
+Domain Analysis of Catalog Microservice:
+
+1. Domain Models
+	Primary domain model is 'Product', associated with 'Category'
+	Consider Domain  event for price changes, leading to integration events.
+
+2. Application Use Cases
+	Main use case are Listing Products and Categories, able to search products.
+	CRUD Operations:
+		Listing Products and Categories
+		Get Product with Product id
+		Get Products with category
+		Create new Product
+		Update Product
+		Delete Product
+	Along with this design our APIs according to REST perspective.
+
+3. Rest Api Endpoints
+
+4. Underlying Data Structures
+	Document Database with Catalog JSON data.
+	2 options : MongoDB No-Sql database, POSTgre Sql DB JSOn Columns. Chosen Postgre Sql with the Marten library.
+	Marten is powerful library that transforms PostgreSql into .Net Transactional Document DB.
+	PostgreSql's JSON column features, allowing us to store and query our data as JSON documents.
+	Combines the flexibility of a document database with the reliability of relational PostgreSql database.
+	----------------------------------------------------------------------------------------------------------------------------
+	Technical Analysis of Catalog MicroServices :
+
+	1. Application Architecture Style
+		Vertical Slice Architecture
+			Organizes our code into feature folders, each feature encapsulated in a single .cs file
+
+	2. Patterns & Principles
+		CQRS Pattern : Command Query Responsiblility Segregation divides operations into commands(write) and queries(read).
+		Mediator Pattern : Facilitates object interact through a 'mediator' reducing direct dependencies and simplifying communications.
+		DI in ASP.NET Core : Dependency Injection is a core feature, allowing us to inject dependencies.
+		Minimal APIs and Routing in ASP.NET 8 : ASP.NET 8's Minimal APIs simplify endpoint definitions, providing light weight syntax for routing and handling HTTP requests.
+		ORM Pattern : Object-Relational Mapping abstracts database interactions, work with database objects using high-level codes.
+
+
+	3. Libraries Nuget Packages
+		MediatR for CQRS : MediatR library simplifies the implementation of CQRS pattern.
+			So Mediator Library simplifies the implementation of the Six design patterns by acting as an in-process 
+			messaging mechanism, helping to send commands and queries to their respective handlers.
+		Carter for API Endpoints : Routing and handling the HTTP requests, easier to define API endpoints with clean and concise code.
+			Carter offers a lightweight library for routing and handling HTTP requests, making it easier to define API endpoints with clean and concise code.
+		Marten for PostGreSql Interaction : USe PostgreSql as a Document DB. It leverages PostgreSQ:'s JSOn capabilities for storing, querying and managing documents.
+		Mapster for Object Mapping : Mapster is a fast, configurable object mapper that simplifies the task of mapping objects.
+		FluentValidation for Input Validation : For building strongly-typed validation rules, ensure inputs are correct before processed.
+
+	4. Project Folder Structure
+		The project is organized into Model, Features, Data and Abstractions.
+		Features like CreateProduct and GetProduct have dedicated handlers and endpoint definitions.
+		Feature folder will be Products.
+		Data folder and Context objects manages database interactions.
+	------------------------------------------------------------------------------------
+
+	Vertical Slice Architecture:
+		This architecture against to traditional layered/onion/clean architetured approaches.
+		Aims to organize code around specific features or use cases, rather than technica concers.
+		Feature is implemented across all layers of the software from user interface to the db.
+		Oftern used in the development of complex feature rich apps.
+		Divide application into distinct feature or functionalities, each of which cuts through all the layers of the application.
+		Contrast to traditional n-tier or layered architecture where the application is divided horizontally.
+
+
+		----------------------------------------
+		CQRS - Command Query Responsibility Segregation
+			CQRS design pattern in order to avoid complex queries to get rid of inefficient joins.
+			Separates read and write operations with separating db.
+			Commands: changing the state of data into application.
+			Queries : handling complex join operations and returning a result and dont change the state of data into application.
+			Large-scaled microservices architectures needs to manage high-volume data requirements.
+			Single db for services can cause bottlenecks.
+			Use both CQRS and Event Sourcing patterns to improve application performance.
+
+			Logical and Physical Implementation of CQRS
+				Logical : splitting Operations, Not DB. Separate the read and write opertations at the code level not on db
+				Even though the same db is used the paths for reading and writing data are distinct.
+
+				Physical : Separate DB, Splitting the read and write opertations not just code but phyiscally using separate DB.
+				Introduces data consistency and synchronizations problems.
+
+				IRequest : interfaces is used to define a request, which can be either a command or query.
+				The return type of the request can be specified as a generic parameter
+
+				Handler : inherits from IRequestHandler<Trequest,TReesponse>, where TRequest is the type of the command or query, and TResponse is the return type.
+
+				TO make the distinction between commands and queries clearer, you can define two custom interface : ICommand and IQuery.
+					public interface ICOmmand<TResult>  : IRequest<TResult>{}
+					public interface IQuery<TResult>  : IRequest<TResult>{}
+
+				Mediator pattern useful in complex or enterprise level applications where request processing often involves more than just business logic
+				Handling a request require additional steps like logging, validaton, auditing, and applying security checks. These are known as cross-cutting cincerns.
+				MediatR provides a mediator pipeline where these cross-cutting concerns can be inserted transparently.
+				Pipeline coordinates the request handling, ensuring that all necessary steps are executed in the right order.
+				In MediatR, pipeline behaviors are used to implement cross-cutting concerns.
+				Wrap around the request handling, allowing you to execute logic before and after the actual handler is called.
+
+
+
+Carter Library for Minimal Api :
+With Asp.net core 8, Minimal Apis have become a popular way to build lightweight and performant microservices and web apis.
+Carter is library that extends the capabilities of Asp.Net Core Minimal APis.
+Provides a more structured way to organize our endpoints and simplifies the creation of HTTP reques handlers.
+Carter is framework that is thin layer of extension methods and functionality over Asp.net core.
+Carter, expecially beneficial in minimal APIs, simplify the development of minimal API endpoints.
+
+
+---------------------
+What is Backing Services for Cloud-Native Microservices
+they are the external components that mcroservices depend on for their operation
+Provide suppoty for various functionalities such as data storage, messaging, caching, and authentication.
+BS like DB, Messaging systems. and caching services ae treated as attached resources
+BS are external to microservice and can be swapped or replaced without changing the microservices core logic
+Decoupled from the microservices themselves, promoting flexibility, scalability, and easier maintenance
+
+	
+
+Underlying Data Structures of Catalog Microservice
+Marten is an ORM(Object-Relational Mapper) that leverages Postgresql's Json capabilites.
+Marten is powerful library that transforms Postgrsql into a .net transactional Document DB.
+PostGreSql's Json column features, allowing us to store and query our data as JSON documents.
+Combines the flexibility of a document database with the reliability of relational PostgreSql database.
+Catalog service use Marten for PostgreSql Interaction as a Document DB.
+
+
+Opening Sessions in Marten as Document DB :
+Martin's session is an interaction pattern for working with the documents stored in PostgreSQL database.
+You can see the image on the slide.
+I document store is the root of the Martin usage, but most of the Martin usage in the code will start
+with one of these session types that can be created from an I document store.
+So under the I document store there are different flavors of session and the root store.
+So these are the query sessions that optimize for read only scenarios and document sessions that optimize
+for the read and write scenarios.
+So let me explain one by one.
+The first one is query sessions.
+These sessions is best used for querying documents without any need for the tracking or saving changes.
+So under the document session for read and write operation, we can also use different type of the document sessions.
+Let me start the first one which is the identity map documentation.
+Martin's I document session implement the identity map pattern that seeks to cache documents loaded by ID.
+This behavior can be very valuable, for example, in handling the web requests or service bus messages.
+When many different objects or functions may need to access the same logical document.
+The second type is lightweight document session.
+It is suitable for small transactions with a mix of the read and write operations.
+For operations that involve updates, inserts or deletes, we use a lightweight sessions.
+It is still transactional but doesn't track the changes to the loaded document.
+And the last one is dirty checking documentation.
+This is the dirty checking document session in this case, and I document station opened with a dirty checking enabled.
+The session will try to detect the changes to any of the documents loaded by that session.
+The dirty checking is done by keeping the original Json fetched from the PostgreSQL, and using the Newtonsoft.json library that makes a node by node.
+Comparison of the Json representation of the document at the time that I document session is called, so you can find the image.
+How we can create these kind of sessions from the Martin Document DB.
+And here you can see that we can use a document store and dot notation to create query session.
+Here you can see the query session and we can create lightweight sessions, identity sessions, dirty tricks sessions and so on.
+These provide to create sessions using the document store.
+And here you can see the operations to perform read write operations or enable to identity map and dirty checking functions.
+So what is the best practice?
+Best practice is understanding and choosing the right type of the session in Martin, which is crucial
+for effective data handling in your applications.
+Always aim to use the lightest session that meets your needs and ensure proper disposal of the sessions
+in order to maintain the performance.
+So we will use mostly lightweight session which is optimized for reading and writing operations.
+
+
+--------------------------------------
+MediatR Pipeline Behaviours
+MediatR powerful features is 'Pipeline Behaviors' allows to additional logic
+into the ewquest handling process: validation, logging, exception handling and performance tracking.
+Pipeline Behaviors act as middleware in the MediatR library, wrap around the request handlng process,
+enabling to implement cross-cutting concerns.
+A class that implements IPipelineBehavior<TRequest,TResponse>.
+Handle method where you can execute code before and after the next delegate is invoked.
+
+Fluent Validation is a .Net library for building strongly-typed validation rules
+Intefrate Fluent Validation with MediatR to validate requests before they reach the actual handler within a pipeline behavior.
+Fluent Validation define validation rules in separate classes, using a fluent interface to specify conditions that each property of your models must satisfy.
+Combining MediatR with Fluent Validation centralized our cross-cutting concerns like validation making our code cleaner and more maintainable
+
+
+
+IPipelineBehavior<TRequest, TResponse> is an interface in the MediatR library for .NET, 
+which is used to define behaviors that can be applied to a request pipeline. 
+MediatR is a popular library that facilitates the implementation of 
+the mediator pattern in .NET applications. 
+This pattern helps in decoupling the request/command handling logic 
+from other aspects of the system, such as logging, validation, and exception handling.
+
+Key Functions of IPipelineBehavior<TRequest, TResponse>
+Pipeline Customization: 
+Allows you to add custom processing logic to the request/response pipeline. 
+This is useful for cross-cutting concerns like logging, caching, validation, and authorization.
+
+Centralized Request Handling: 
+By implementing IPipelineBehavior, you can manage aspects of the request 
+processing in a centralized manner, making the code cleaner and more maintainable.
+
+Pre-Processing and Post-Processing: 
+You can perform actions before and after the request handler is invoked. 
+For instance, you might want to log the request details before handling it and log the response details afterward.
+
+Components
+
+    TRequest: The type of the request.
+    TResponse: The type of the response.
+    RequestHandlerDelegate<TResponse>: A delegate representing the next handler in the pipeline. Calling next() moves the request to the next handler or behavior in the pipeline.
+
+Use Cases
+
+    Logging: Log the details of incoming requests and outgoing responses.
+    Validation: Validate the request before it reaches the main handler.
+    Caching: Implement caching mechanisms to avoid redundant processing.
+    Authorization: Check if the user is authorized to make the request.
+    Exception Handling: Catch and handle exceptions that might be thrown during the request processing.
+
+IPipelineBehavior<TRequest, TResponse> is a powerful feature in MediatR that allows 
+you to add cross-cutting concerns to your request processing pipeline. 
+This can greatly enhance the modularity and maintainability of your application by centralizing common functionalities like logging, validation
+
+
+------------------------------------------------
+
+Seeding CatalogDB with Marten Initial Baseline Data
+Seeding is essential for initializing the database with baseline data.
+Marten provides a feature called IInitialData for this purpose.
+Implement the IInitialData interface to seed our CatalogDb with predefined products.
+This interfaces allows Marten to automatically populate the db when its first initialized
+
+
+InitializeWith()
+
+The InitializeWith() method is used to seed the database with initial data 
+or perform some setup logic when Marten initializes. 
+This is particularly useful for scenarios where you need to ensure 
+certain data is available in the database before your application starts serving requests.
+
+For example, you might want to pre-load reference data, create specific documents, or ensure certain indexes exist.
+
+
+UseLightweightSessions()
+
+The UseLightweightSessions() method configures Marten to use lightweight sessions by default. 
+In Marten, there are different types of sessions you can use depending on your requirements:
+
+Lightweight Sessions: 
+These are optimized for read-heavy workloads and do not track changes to documents automatically. 
+They are suitable for scenarios where you primarily perform read operations or where you manage document updates explicitly.
+
+Dirty Tracking Sessions: 
+These sessions automatically track changes to documents and are more suitable for write-heavy 
+operations where you want Marten to manage changes to your documents.
+
+Query-only Sessions: 
+These sessions are read-only and do not allow any updates or changes to documents.
+
+Using UseLightweightSessions() ensures that the sessions created by default are lightweight, 
+making them suitable for applications where read performance is critical and you manage updates explicitly.
+
+-----------------------------------------------
+
+Health Checks
+Health checks in Asp.Net Core provide a way to monitor the status of your application and its dependencies
+Add health checks to our Catalog microservices with checking the health of our PostgreSql data
+Health Check are exposed by an app as Http endpoints
+Health check endpoints can be configured for various real time monitoring scenarios
+Container orchestrator may respond to a failing health check by halting a rolling deployment or restarting a container.
+Load balancer might react to an unhealthy app by routing traffic away from the failing instance to a healthy instance.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Vertical Slice Architecture
+Organizes our code into feature folders, each feature encapsulated in a single .cs file
+
+Repository Pattern : DDD pattern to keep persistence concerns outside of the system's domain model.
+Provides an abstraction of data that app can work with a simple abstraction interfaces
+
