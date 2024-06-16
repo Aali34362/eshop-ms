@@ -1,4 +1,4 @@
-﻿namespace BaseIntegrated.BaseEvents;
+﻿namespace Base.BaseEvents;
 
 public abstract class BaseEventHandler<INotification, TRepository>
     (ILogger logger, TRepository repository)

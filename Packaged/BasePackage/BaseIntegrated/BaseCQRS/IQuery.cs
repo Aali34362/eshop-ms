@@ -1,4 +1,4 @@
-﻿namespace BaseIntegrated.BaseCQRS;
+﻿namespace Base.BaseCQRS;
 
 public interface IQuery<out TResponse> : IRequest<TResponse>
     where TResponse : notnull

@@ -1,4 +1,4 @@
-﻿namespace BaseIntegrated.BaseCQRS;
+﻿namespace Base.BaseCQRS;
 
 public interface ICommandHandler<in TCommand>
     : ICommandHandler<TCommand, Unit>

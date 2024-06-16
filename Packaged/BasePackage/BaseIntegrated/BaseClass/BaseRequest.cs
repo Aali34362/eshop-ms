@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace BaseIntegrated.BaseClass;
+﻿namespace Base.BaseClass;
 
 public abstract class BaseRequest
 {

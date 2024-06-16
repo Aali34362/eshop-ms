@@ -1,4 +1,4 @@
-﻿namespace BaseIntegrated.BaseEvents;
+﻿namespace Base.BaseEvents;
 
 public interface IBaseDomainEvent : INotification{ }
 

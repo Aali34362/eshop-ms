@@ -1,4 +1,4 @@
-﻿namespace BaseIntegrated.BaseClass;
+﻿namespace Base.BaseClass;
 
 public abstract class BaseResponse
 {

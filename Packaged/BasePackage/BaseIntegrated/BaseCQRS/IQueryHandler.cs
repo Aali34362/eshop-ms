@@ -1,4 +1,4 @@
-﻿namespace BaseIntegrated.BaseCQRS;
+﻿namespace Base.BaseCQRS;
 
 public interface IQueryHandler<in TQuery, TResponse>
     : IRequestHandler<TQuery, TResponse>
