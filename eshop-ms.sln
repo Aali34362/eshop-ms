@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlPackage", "SqlPackage", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{782DD822-E76E-4093-81FA-884CBFA242CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base.Integrated", "Packaged\BasePackage\BaseIntegrated\Base.Integrated.csproj", "{58764235-F878-4722-99B8-34BC354155A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base", "Packaged\BasePackage\BaseIntegrated\Base.csproj", "{58764235-F878-4722-99B8-34BC354155A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Behavior", "Packaged\BasePackage\Base.Behavior\Base.Behavior.csproj", "{22CF8C00-7215-411D-B442-5199C6699738}"
 EndProject
