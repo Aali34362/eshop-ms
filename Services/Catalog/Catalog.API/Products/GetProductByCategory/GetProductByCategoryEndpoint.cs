@@ -2,7 +2,7 @@
 
 
 ////public record GetProductByCategoryRequest();
-public record GetProductByCategoryResponse(IEnumerable<Product> product);
+public record GetProductByCategoryResponse(IEnumerable<Product> Products);
 
 public class GetProductByCategoryEndpoint : ICarterModule
 {
