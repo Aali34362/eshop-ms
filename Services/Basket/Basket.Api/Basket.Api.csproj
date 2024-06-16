@@ -33,7 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Behavior\Base.Behavior.csproj" />
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Exceptions\Base.Exceptions.csproj" />
-    <ProjectReference Include="..\..\..\Packaged\BasePackage\BaseIntegrated\Base.csproj" />
+    <ProjectReference Include="..\..\..\Packaged\BasePackage\Base\Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>
