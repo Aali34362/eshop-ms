@@ -1,8 +1,4 @@
-﻿using Basket.API.DomainEvents;
-using Marten.Events;
-
-namespace Basket.API.Basket.StoreBasket;
-
+﻿namespace Basket.API.Basket.StoreBasket;
 public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
 ////public record StoreBasketResult(bool IsSuccess);
 public record StoreBasketResult(string UserName);
@@ -24,20 +20,9 @@ public class StoreBasketCommandHandler(IMediator mediator)
     public async Task<StoreBasketResult> Handle(StoreBasketCommand request, CancellationToken cancellationToken)
     {
         ShoppingCart cart = request.Cart;
-        try
-        {
-            string EventMessage = string.Empty;
-            var handler = _mediator.Publish(new BasketCreatedDomainEvent(cart, EventMessage), cancellationToken);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-        finally
-        {
-
-        }
-        return new StoreBasketResult("Abc");
+        string EventMessage = string.Empty;
+        await _mediator.Publish(new BasketCreatedDomainEvent(cart, EventMessage), cancellationToken);
+        return new StoreBasketResult(cart.UserName);
     }
 
     protected virtual void OnSuccess<TEvent>(TEvent @event) where TEvent : IEvent

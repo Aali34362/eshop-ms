@@ -15,7 +15,7 @@ internal sealed class BasketCreatedDomainEventHandler
                 nameof(BasketCreatedDomainEventHandler), DateTime.Now, eventState);
             await Task.Delay(300);
 
-            eventState = await _repository.CreateBasket(notification.CreatedCart);
+            await _repository.StoreBasket(notification.CreatedCart, cancellationToken);
         });
     }
 }
@@ -53,7 +53,7 @@ internal sealed class BasketDeletedDomainEventHandler
                 nameof(BasketDeletedDomainEventHandler), DateTime.Now);
             await Task.Delay(300);
 
-            await _repository.DeleteBasket(notification.UserName);
+            await _repository.DeleteBasket(notification.UserName, cancellationToken);
         });
     }
 }

@@ -17,6 +17,7 @@ builder.Services.AddMarten(
     {
         opts.Connection(builder.Configuration.GetConnectionString("Database")!);
         ////opts.AutoCreateSchemaObjects();
+        opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
     })
     .UseLightweightSessions();
 ////.InitializeWith()
@@ -25,6 +26,7 @@ builder.Services.AddMarten(
 ////    builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IBasketRepository,BasketRepository>();
 builder.Services.AddCarter();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

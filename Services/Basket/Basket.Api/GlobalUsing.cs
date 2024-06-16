@@ -14,3 +14,7 @@ global using Mapster;
 global using MediatR;
 global using Base.BaseEvents;
 global using Basket.API.Data;
+global using Basket.API.DomainEvents;
+global using Marten.Events;
+global using Basket.Api.Exceptions;
+global using Marten.Schema;
