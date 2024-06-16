@@ -42,6 +42,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base", "Packaged\BasePackag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Behavior", "Packaged\BasePackage\Base.Behavior\Base.Behavior.csproj", "{22CF8C00-7215-411D-B442-5199C6699738}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Exceptions", "Packaged\BasePackage\Base.Exceptions\Base.Exceptions.csproj", "{F54E16B8-BC38-4A1E-AA95-ACFE782F5FF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{22CF8C00-7215-411D-B442-5199C6699738}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22CF8C00-7215-411D-B442-5199C6699738}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22CF8C00-7215-411D-B442-5199C6699738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F54E16B8-BC38-4A1E-AA95-ACFE782F5FF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F54E16B8-BC38-4A1E-AA95-ACFE782F5FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F54E16B8-BC38-4A1E-AA95-ACFE782F5FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F54E16B8-BC38-4A1E-AA95-ACFE782F5FF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{782DD822-E76E-4093-81FA-884CBFA242CD} = {FC4CE5CB-13F5-484B-8E82-B8A000057C4E}
 		{58764235-F878-4722-99B8-34BC354155A5} = {A10D15F0-A480-4A3E-89F8-56EE762BAA3A}
 		{22CF8C00-7215-411D-B442-5199C6699738} = {A10D15F0-A480-4A3E-89F8-56EE762BAA3A}
+		{F54E16B8-BC38-4A1E-AA95-ACFE782F5FF3} = {A10D15F0-A480-4A3E-89F8-56EE762BAA3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D91077-3225-4913-85BD-F374291667F4}
