@@ -25,3 +25,22 @@ message CouponModel
 	int32 amount = 4;
 }
 
+message CreateDiscountRequest
+{
+	CouponModel coupon = 1;
+}
+
+message UpdateDiscountRequest
+{
+	CouponModel coupon = 1;
+}
+
+message DeleteDiscountRequest
+{
+	string productName = 1;
+}
+
+message DeleteDiscountResponse
+{
+	bool success = 1;
+}
