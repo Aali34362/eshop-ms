@@ -45,10 +45,11 @@ builder.Services.AddWatchDogServices(opt =>
 {
     opt.IsAutoClear = true;
     opt.SetExternalDbConnString = builder.Configuration.GetConnectionString("Database")!;
-    opt.DbDriverOption = WatchDogDbDriverEnum.PostgreSql;
+    opt.DbDriverOption = WatchDogDbDriverEnum.PostgreSql;    
 });
 builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
 
 var app = builder.Build();
