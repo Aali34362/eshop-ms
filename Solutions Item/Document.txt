@@ -354,7 +354,30 @@ Using AMQP protocols, the client sends the message with using message broker sys
 THe message producer does not wait for a response.
 Message consume from the subscriber systems in async way and no one waiting for response sunddenly.
 
+GRPC:
+It is an open source remote procedure call(RPC) system developed at google.
+It is a framework to efficiently connect services and build distributed systems.
+It is focused on high performance and uses the HTTP/2 protocol to transport binary messages.
+It relies on the Protocol Buffers language to define service contracts
+Protocol Buffers allows to define the interface to be used in service to service communication regardless of the programming language
+It generates corss-platform client and server bindings for many languages.
+Most common usage scenarios include connecting services in microservices style architecture.
+So the gRPC framework allows developers to create services that can communicate with each other efficiently
+and independently from their preferred programming language.
+Once you define a contract with protobuf, this contract can be used by each service to automatically
+generate the code that can sets up the communication infrastructure.
+This feature simplifies the creation of the service interactions and together with high performance,
+makes gRPC the ideal framework for creating microservices and communicating between inter service communications.
 
-
+how gRPC works ?
+A RPC is a form of client server communication that uses a function called, rather than usual Http call.
+So in gRPC, a client application can directly call a method on a server application on a different
+machine like it is a local object, it making it easy for you to build distributed applications and services.
+As with many RPC systems, gRPC is based on the idea of defining a service that specifies methods,
+and these can be called remotely with their parameters and return types.
+On the server side, the server implements this interface and runs a gRPC server to handle client calls.
+On the client side, the client has a setup that provides the same methods as the server.
+gRPC client and servers can work and talk to each other in a different of environments, from servers
+to your own desktop applications, and that can be written in any language that gRPC supports.
 
 
