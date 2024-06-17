@@ -335,6 +335,26 @@ It simplifies the process of service registration and decoration in Asp.net Core
 
 
 
+------------------------------------
+Microservices Synchronous Communication
+Synchronous communication is using HTTP or gRPC protocol for returning synchronous response.
+The client sends a request and waits for a response from the service
+The client code block their thread, until the response reach from the server
+The client code block their thread, until the response reach from the server.
+The synchronous communication protocols can be HTTP or HTTPs
+The client sends a request with using http protocols and waits for a response from the service.
+The client call the server and block client their operations.
+The client code will continue its task when it receives the HTTP server response
+
+Microservices Asynchronous Communication
+The client sends a request but it doesnt wait for the response from the service.
+The client should not have blocked a thread while waiting for a response.
+AMQP(Advanced Message Queuing Protocol)
+Using AMQP protocols, the client sends the message with using message broker systems like Kafka and RabbitMQ queue.
+THe message producer does not wait for a response.
+Message consume from the subscriber systems in async way and no one waiting for response sunddenly.
+
+
 
 
 
