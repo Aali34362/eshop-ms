@@ -19,7 +19,7 @@ message GetDiscountRequest
 
 message CouponModel
 {
-	Guid Id = 1;
+	string Id = 1;
 	string productName = 2;
 	string description = 3;
 	int32 amount = 4;
