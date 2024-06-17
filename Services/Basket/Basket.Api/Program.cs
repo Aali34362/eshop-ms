@@ -27,6 +27,15 @@ builder.Services.AddMarten(
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IBasketRepository,BasketRepository>();
+builder.Services.Decorate<IBasketRepository,CachedBasketRepository>();
+////builder.Services.AddScoped<IBasketRepository>(provider => {
+////    var basketRepository = provider.GetRequiredService<BasketRepository>();
+////    return new CachedBasketRepository(basketRepository, provider.GetRequiredService<IDistributedCache>());
+////});
+builder.Services.AddStackExchangeRedisCache( options => {
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    //options.InstanceName = "Basket";
+});
 builder.Services.AddCarter();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

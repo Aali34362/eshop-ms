@@ -18,3 +18,5 @@ global using Basket.API.DomainEvents;
 global using Marten.Events;
 global using Basket.Api.Exceptions;
 global using Marten.Schema;
+global using Microsoft.Extensions.Caching.Distributed;
+global using System.Text.Json;

@@ -275,3 +275,66 @@ Organizes our code into feature folders, each feature encapsulated in a single .
 Repository Pattern : DDD pattern to keep persistence concerns outside of the system's domain model.
 Provides an abstraction of data that app can work with a simple abstraction interfaces
 
+---------------------------------------
+Redis Cache : 
+Redis is an adv key-value store known for its high performance.
+It is often used for caching, session storage, pub/sub system and more.
+Redis offers in-memory data storage, result in fast data access
+Its support for various data structures make it	versatile for different use cases.
+Redis is an excellect choice for microservice architecture primarily due toits inherent distributed characteristics.
+Enabling services to access shared data quickly and reducing the load on db.
+
+Implement Proxy Pattern, Decorator Pattern, Scrutor Library.
+Implement Cache-aside Pattern / Cache invalidation
+Develop Cached BasketRepository and Decorate w/Scrutor Library
+
+
+Cache-Aside Pattern :
+When a client needs to access data, it first checks to see if the data is in the cache.
+If the data is in the cache, the client retrieves it from the cache and returns it to the caller.
+If the data is not in the cache, the client retrieves it from the db, stores it in the cache, and then returns it to the caller.
+Some of caching systems provide read-through and write-through/write-behind operations.
+In there systems, client application retrieves data over by cache.
+For not supported Caches, it's the responsibility the applications use the cache asn update the cache if there is a cache-miss.
+Microservices good example to implement Cache-Aside pattern, it is common to use a distributed cache that is shared across mutluple services.
+Cache-aside pattern can improve performance of a microservices architecture, by reducing the number of expensive db calls
+To use the cache-aside pattern in a microservice, need to implement a cache layer in your service.
+Involve using a cache library or framework, such as Redis or Memcached, or implementing a custom cache solutions
+
+Drawbacks
+Cache can introduce additional complexity and may not be suitable for all situations
+The cache may need to be invalidated or refreshed when data is updated in the db or data store.
+This can require additional coordination between the microservices.
+The cache may introduce additional latency if it is located remotely from the microservices that are using it.
+
+Proxy Pattern:
+Provides a placeholder for another object to control access to it.
+This pattern creates a proxy object that serves as an intermediary for request intended for the original object.
+Lazy loading, controlling acces, logging.
+It's like having gatekeeper which adds extra behavior or checks before accessing the actual object.
+
+Decorator Pattern:
+Dynamically adds behavior to an object without altering its structure.
+It involves a set of decorator classes that are used to extend the functionality of the original class without changing its code.
+Useful for adding functionalities to objects at runtime.
+For example, enhancing a window object with additional features like borders, scrollbars dynamically
+
+How canw e use Decorator Pattern.
+Implementation : 
+Create abstract decorators that implement the same interface as the object they will extend.
+Then concrete decorator classes add additional behavior.
+Example:
+If you have a BasketRepository class for db operations, you can create a CachedBasketRepository that extends the BasketRepository with caching capabilities.
+
+What is Scrutor Library and why we use it.
+.Net library that extends the built-in IOC container of Asp.Net Core.
+It provides additional capabilities to scan and register services in more flexible way.
+Usage:
+Implementing patterns like Decorator in a clean and managaeable way.
+It simplifies the process of service registration and decoration in Asp.net Core applications.
+
+
+
+
+
+
