@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Item", "Solutions
 	ProjectSection(SolutionItems) = preProject
 		Solutions Item\Document.txt = Solutions Item\Document.txt
 		MigrationCommand.txt = MigrationCommand.txt
+		Scaffoldcommand.txt = Scaffoldcommand.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaged", "Packaged", "{775683EB-3E45-428A-8C82-F11873950D83}"

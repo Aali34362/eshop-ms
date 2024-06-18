@@ -11,4 +11,5 @@ global using Discount.Grpc.Repository;
 global using Discount.Grpc.DomainEvents;
 global using Microsoft.EntityFrameworkCore; 
 global using Microsoft.EntityFrameworkCore.Design;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
