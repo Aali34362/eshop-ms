@@ -1,0 +1,13 @@
+Add-Migration InitialMigration
+Remove-Migration
+Update-Database
+
+for more than one db context in same project we have to mention the Context Name.
+
+when we add data in DiscountContext OnModelCreating()
+Add-Migration SeededTeams -Context DiscountContext
+Update-Database -Context DiscountContext
+Remove-Migration -Context DiscountContext
+Script-Migration -Context DiscountContext
+Script-Migration -Context DiscountContext -Idempotent
+Get-Migration -Context DiscountContext

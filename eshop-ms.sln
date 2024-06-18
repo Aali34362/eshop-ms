@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Item", "Solutions Item", "{4511B111-4417-47AE-83C0-FCFA72A08FFD}"
 	ProjectSection(SolutionItems) = preProject
 		Solutions Item\Document.txt = Solutions Item\Document.txt
+		MigrationCommand.txt = MigrationCommand.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaged", "Packaged", "{775683EB-3E45-428A-8C82-F11873950D83}"
