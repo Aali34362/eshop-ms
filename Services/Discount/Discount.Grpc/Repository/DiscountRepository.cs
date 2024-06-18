@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Discount.Grpc.Repository;
+﻿namespace Discount.Grpc.Repository;
 
 public class DiscountRepository(DiscountContext discountContext, ILogger<DiscountRepository> logger) : IDiscountRepository
 {
