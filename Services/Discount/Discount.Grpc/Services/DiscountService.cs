@@ -1,6 +1,4 @@
-﻿using Discount.Grpc.Models;
-
-namespace Discount.Grpc.Services;
+﻿namespace Discount.Grpc.Services;
 
 public class DiscountService(IMediator mediator,IDiscountRepository discountRepository) : DiscountProtoService.DiscountProtoServiceBase
 {
