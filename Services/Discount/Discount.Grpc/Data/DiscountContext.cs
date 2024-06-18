@@ -56,15 +56,18 @@ public class DiscountContextFactory : IDesignTimeDbContextFactory<DiscountContex
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
 
+        var projectPath = Directory.GetCurrentDirectory();
+
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
         
         var sqliteDatabaseName = configuration.GetConnectionString("Database");
-        var environment = configuration["Environment"];
+        var environment = configuration["Environment"] ?? "Development";
 
-        var dbPath = Path.Combine(path, sqliteDatabaseName);
+        ////var dbPath = Path.Combine(path, sqliteDatabaseName);
+        var dbPath = Path.Combine(projectPath + "//Data", sqliteDatabaseName);
 
         var optionsBuilder = new DbContextOptionsBuilder<DiscountContext>();
         optionsBuilder.UseSqlite($"Data Source = {dbPath}")
