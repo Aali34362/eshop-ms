@@ -1,5 +1,9 @@
-﻿global using Grpc.Core;
+﻿global using MediatR;
+global using Grpc.Core;
 global using Base.BaseClass;
 global using Base.BaseEvents;
 global using Discount.Grpc.Models;
+global using Discount.Grpc.Services;
+global using Base.Behavior.Behaviors;
 global using Discount.Grpc.Repository;
+global using Discount.Grpc.DomainEvents;

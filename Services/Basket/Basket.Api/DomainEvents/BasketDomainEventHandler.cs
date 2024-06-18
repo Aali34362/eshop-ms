@@ -34,7 +34,7 @@ internal sealed class BasketUpdatedDomainEventHandler
                 nameof(BasketUpdatedDomainEventHandler), DateTime.Now);
             await Task.Delay(300);
 
-            await _repository.UpdateBasket(notification.CreatedCart);
+            await _repository.UpdateBasket(notification.UpdatedCart);
         });
     }
 }
