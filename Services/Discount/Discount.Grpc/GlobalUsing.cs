@@ -7,3 +7,4 @@ global using Discount.Grpc.Services;
 global using Base.Behavior.Behaviors;
 global using Discount.Grpc.Repository;
 global using Discount.Grpc.DomainEvents;
+global using Microsoft.EntityFrameworkCore;
