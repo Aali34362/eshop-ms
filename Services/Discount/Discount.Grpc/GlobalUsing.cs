@@ -1,4 +1,5 @@
-﻿global using MediatR;
+﻿global using Mapster;
+global using MediatR;
 global using Grpc.Core;
 global using Base.BaseClass;
 global using Base.BaseEvents;

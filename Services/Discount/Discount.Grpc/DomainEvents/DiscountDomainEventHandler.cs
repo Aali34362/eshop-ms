@@ -53,7 +53,7 @@ internal sealed class DiscountDeletedDomainEventHandler
                 nameof(DiscountDeletedDomainEventHandler), DateTime.Now);
             await Task.Delay(300);
 
-            await _repository.DeleteDiscount(notification.ProductName, cancellationToken);
+            await _repository.DeleteDiscount(notification.DeletedCoupon, cancellationToken);
         });
     }
 }

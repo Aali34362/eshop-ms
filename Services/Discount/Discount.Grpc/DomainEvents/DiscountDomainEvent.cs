@@ -10,7 +10,7 @@ public class DiscountUpdatedDomainEvent(Coupon updatedCoupon, string Message) : 
     public Coupon UpdatedCoupon = updatedCoupon;
 }
 
-public class DiscountDeletedDomainEvent(string productName, string Message) : BaseDomainEvent(Message)
+public class DiscountDeletedDomainEvent(Coupon deletedCoupon, string Message) : BaseDomainEvent(Message)
 {
-    public readonly string ProductName = productName;
+    public readonly Coupon DeletedCoupon = deletedCoupon;
 }
