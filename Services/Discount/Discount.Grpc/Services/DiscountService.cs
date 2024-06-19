@@ -28,9 +28,8 @@ public class DiscountService(IMediator mediator,IDiscountRepository discountRepo
     {
         ValidateRequestNotNull(request);
 
-        var coupon = await _discountRepository.GetDiscount(request.ProductName);
+        var coupon = await ValidateCoupon(request.ProductName);
         var couponModel = coupon.Adapt<CouponModel>();
-        couponModel.Id = coupon.Id.ToString();
         return couponModel;
     }
 
@@ -51,7 +50,6 @@ public class DiscountService(IMediator mediator,IDiscountRepository discountRepo
         
         var getCoupon = await _discountRepository.GetDiscount(request.Coupon.ProductName);
         var getCouponModel = getCoupon.Adapt<CouponModel>();
-        getCouponModel.Id = getCoupon.Id.ToString();
         return getCouponModel;
     }
 

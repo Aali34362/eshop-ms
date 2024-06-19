@@ -15,14 +15,9 @@ public class DiscountRepository(DiscountContext discountContext, ILogger<Discoun
         ////abc
     }
 
-    public async Task<Coupon> GetDiscount(string productName, CancellationToken cancellation = default)
-    {
-        System.Linq.Expressions.Expression<Func<Coupon, bool>> predicate = x => x.ProductName.Equals(productName);
-        var coupon = await _discountContext.Coupons.FirstOrDefaultAsync(predicate);
-        if (coupon == null)
-            return null;
-        return coupon;
-    }
+    public async Task<Coupon> GetDiscount(string productName, CancellationToken cancellation = default)=>
+        await _discountContext.Coupons.FirstOrDefaultAsync(x => x.ProductName.Equals(productName));
+    
 
     public async Task<bool> CreateDiscount(Coupon request, CancellationToken cancellation = default)
     {
