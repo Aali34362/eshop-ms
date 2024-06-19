@@ -16,6 +16,7 @@
     <PackageReference Include="Bogus" Version="35.5.1" />
     <PackageReference Include="Carter" Version="8.2.1" />
     <PackageReference Include="FluentValidation" Version="11.9.2" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Marten" Version="7.19.1" />
     <PackageReference Include="Scrutor" Version="4.2.2" />
@@ -41,6 +42,12 @@
   <ItemGroup>
     <Folder Include="Dtos\" />
     <Folder Include="GrpcServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\Discount\Discount.Grpc\Protos\discount.proto" GrpcServices="Client">
+      <Link>Protos\discount.proto</Link>
+    </Protobuf>
   </ItemGroup>
 
 </Project>
