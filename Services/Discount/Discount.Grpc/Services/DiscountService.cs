@@ -1,8 +1,9 @@
 ﻿namespace Discount.Grpc.Services;
 
-public class DiscountService(IMediator mediator,IDiscountRepository discountRepository) : DiscountProtoService.DiscountProtoServiceBase
+public class DiscountService(IMediator mediator,IDiscountRepository discountRepository, IMapper mapper) : DiscountProtoService.DiscountProtoServiceBase
 {
     private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+    private readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     private readonly IDiscountRepository _discountRepository = discountRepository ?? throw new ArgumentNullException(nameof(discountRepository));
 
     public void Dispose()
@@ -26,12 +27,17 @@ public class DiscountService(IMediator mediator,IDiscountRepository discountRepo
     public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
     {
         var coupon = await _discountRepository.GetDiscount(request.Coupon.ProductName);
-        if (coupon.ProductName.Equals("No Discount"))
-            await _mediator.Publish(new DiscountCreatedDomainEvent(request.Coupon.Adapt<Coupon>(), string.Empty));
+        if (coupon.ProductName.Equals("Product Not Found"))
+        {
+            var createCoupon = _mapper.Map<CouponModel,Coupon>(request.Coupon);
+            await _mediator.Publish(new DiscountCreatedDomainEvent(createCoupon, string.Empty));
+        }
         else
+        {
             return coupon.Adapt<CouponModel>();
+        }
         
-        var getCoupon = await _discountRepository.GetDiscount(coupon.ProductName);
+        var getCoupon = await _discountRepository.GetDiscount(request.Coupon.ProductName);
         var getCouponModel = getCoupon.Adapt<CouponModel>();
         getCouponModel.Id = getCoupon.Id.ToString();
         return getCouponModel;
@@ -40,7 +46,7 @@ public class DiscountService(IMediator mediator,IDiscountRepository discountRepo
     public override async Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
     {
         var coupon = await _discountRepository.GetDiscount(request.Coupon.ProductName);
-        if (coupon.ProductName.Equals("No Discount"))
+        if (coupon.ProductName.Equals("Product Not Found"))
             return coupon.Adapt<CouponModel>();
 
         await _mediator.Publish(new DiscountUpdatedDomainEvent(request.Coupon.Adapt<Coupon>(), string.Empty));
@@ -52,7 +58,7 @@ public class DiscountService(IMediator mediator,IDiscountRepository discountRepo
     public override async Task<DeleteDiscountResponse> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
     {
         var coupon = await _discountRepository.GetDiscount(request.ProductName);
-        if(coupon.ProductName.Equals("No Discount"))
+        if(coupon.ProductName.Equals("Product Not Found"))
             return new DeleteDiscountResponse() { Success = false };
 
         string EventMessage = string.Empty;

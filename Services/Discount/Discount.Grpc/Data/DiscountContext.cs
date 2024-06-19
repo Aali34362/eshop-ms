@@ -49,38 +49,38 @@ public class DiscountContext(DbContextOptions<DiscountContext> options) : DbCont
     }
 }
 
-public class DiscountContextFactory : IDesignTimeDbContextFactory<DiscountContext>
-{
-    public DiscountContext CreateDbContext(string[] args)
-    {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
+//////public class DiscountContextFactory : IDesignTimeDbContextFactory<DiscountContext>
+//////{
+//////    public DiscountContext CreateDbContext(string[] args)
+//////    {
+//////        var folder = Environment.SpecialFolder.LocalApplicationData;
+//////        var path = Environment.GetFolderPath(folder);
 
-        var projectPath = Directory.GetCurrentDirectory();
+//////        var projectPath = Directory.GetCurrentDirectory();
 
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
+//////        IConfigurationRoot configuration = new ConfigurationBuilder()
+//////            .SetBasePath(Directory.GetCurrentDirectory())
+//////            .AddJsonFile("appsettings.json")
+//////            .Build();
         
-        var sqliteDatabaseName = configuration.GetConnectionString("Database");
-        var environment = configuration["Environment"] ?? "Development";
+//////        var sqliteDatabaseName = configuration.GetConnectionString("Database");
+//////        var environment = configuration["Environment"] ?? "Development";
 
-        ////var dbPath = Path.Combine(path, sqliteDatabaseName);
-        var dbPath = Path.Combine(projectPath + "//Data", sqliteDatabaseName);
+//////        ////var dbPath = Path.Combine(path, sqliteDatabaseName);
+//////        var dbPath = Path.Combine(projectPath + "//Data", sqliteDatabaseName);
 
-        var optionsBuilder = new DbContextOptionsBuilder<DiscountContext>();
-        optionsBuilder.UseSqlite($"Data Source = {dbPath}")
-            .UseLazyLoadingProxies()
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll)
-            .LogTo(Console.WriteLine, LogLevel.Information);
+//////        var optionsBuilder = new DbContextOptionsBuilder<DiscountContext>();
+//////        optionsBuilder.UseSqlite($"Data Source = {dbPath}")
+//////            .UseLazyLoadingProxies()
+//////            .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll)
+//////            .LogTo(Console.WriteLine, LogLevel.Information);
 
-        if (environment != "Production")
-        {
-            optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.EnableDetailedErrors();
-        }
+//////        if (environment != "Production")
+//////        {
+//////            optionsBuilder.EnableSensitiveDataLogging();
+//////            optionsBuilder.EnableDetailedErrors();
+//////        }
 
-        return new DiscountContext(optionsBuilder.Options);
-    }
-}
+//////        return new DiscountContext(optionsBuilder.Options);
+//////    }
+//////}

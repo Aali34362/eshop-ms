@@ -18,9 +18,9 @@ public class DiscountRepository(DiscountContext discountContext, ILogger<Discoun
     public async Task<Coupon> GetDiscount(string productName, CancellationToken cancellation = default)
     {
         System.Linq.Expressions.Expression<Func<Coupon, bool>> predicate = x => x.ProductName.Equals(productName);
-        var coupon = await _discountContext.Coupons.FirstOrDefaultAsync(predicate, cancellation);
+        var coupon = await _discountContext.Coupons.FirstOrDefaultAsync(predicate);
         if (coupon == null)
-            return new Coupon() { Id = Guid.NewGuid(), ProductName="No Discount", Amount=0,Description="No Discount Desc" };
+            return new Coupon() { Id = Guid.NewGuid(), ProductName="Product Not Found", Amount=0,Description="No Discount Desc" };
         return coupon;
     }
 
