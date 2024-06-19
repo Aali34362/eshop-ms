@@ -381,3 +381,33 @@ gRPC client and servers can work and talk to each other in a different of enviro
 to your own desktop applications, and that can be written in any language that gRPC supports.
 
 
+----------------------------------
+DDD, CQRS and Clean Architectures
+
+Fundamental architectural styples guiding the development of Ordering microservices.
+Clean Architecture organized into 4 layers with class Library project that reference according to clean architecture.
+
+
+
+Patterns and Principles of Ordering
+
+1) SOLID, KISS, YAGNI, SoC, DIP principles and DI are foundational.
+2) Domain Layer Patterns
+   Design a DDD oriented microservice, DDD Tactical Patterns
+   Domain Entity pattern, Entity Base classes - Seed Work
+   Anemic-domain model vs Rich-domain model
+   The Value Object Pattern
+   The Aggregate pattern, The Aggregate Root or Root Entity pattern
+   Strong Typed IDs Pattern
+   Domain Events vs Integration Events
+3) Infrastructure Data Layer Patterns
+   Repository Pattern
+   EF Core ORM - Code First Approach - Migration - Seeding DB
+   Value Object Complex Types, EF Aggregate Root Entities
+   Entity COnfigurations w? Model Builder - DDD to EF Core Entity Object.
+   Raise & Dispatch Domain Events with EF Core and MediatR
+4) Presentation Api Layer Patterns
+   Minimal APIs
+   Asp.Net DI, Routing with lastest asp.net 8 features
+
+
