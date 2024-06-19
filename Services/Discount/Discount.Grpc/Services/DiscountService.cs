@@ -48,8 +48,8 @@ public class DiscountService(IMediator mediator,IDiscountRepository discountRepo
         var coupon = await _discountRepository.GetDiscount(request.Coupon.ProductName);
         if (coupon.ProductName.Equals("Product Not Found"))
             return coupon.Adapt<CouponModel>();
-
-        await _mediator.Publish(new DiscountUpdatedDomainEvent(request.Coupon.Adapt<Coupon>(), string.Empty));
+        var updateCoupon = _mapper.Map<CouponModel, Coupon>(request.Coupon);
+        await _mediator.Publish(new DiscountUpdatedDomainEvent(updateCoupon, string.Empty));
 
         request.Coupon.Id = coupon.Id.ToString();
         return request.Coupon;
