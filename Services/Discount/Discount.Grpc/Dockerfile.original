@@ -10,9 +10,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Discount/Discount.Grpc/Discount.Grpc.csproj", "Services/Discount/Discount.Grpc/"]
-COPY ["Packaged/BasePackage/Base.Behavior/Base.Behavior.csproj", "Packaged/BasePackage/Base.Behavior/"]
-COPY ["Packaged/BasePackage/Base/Base.csproj", "Packaged/BasePackage/Base/"]
-COPY ["Packaged/BasePackage/Base.Exceptions/Base.Exceptions.csproj", "Packaged/BasePackage/Base.Exceptions/"]
 RUN dotnet restore "./Services/Discount/Discount.Grpc/Discount.Grpc.csproj"
 COPY . .
 WORKDIR "/src/Services/Discount/Discount.Grpc"
