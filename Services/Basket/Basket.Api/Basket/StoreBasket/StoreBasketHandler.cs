@@ -12,7 +12,7 @@ public class StoreBasketCommandValidator : AbstractValidator<StoreBasketCommand>
     }
 }
 
-public class StoreBasketCommandHandler(IMediator mediator)
+public class StoreBasketCommandHandler(IMediator mediator, DiscountProtoService.DiscountProtoServiceClient discount)
     : ICommandHandler<StoreBasketCommand, StoreBasketResult>
 {
     private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -20,10 +20,20 @@ public class StoreBasketCommandHandler(IMediator mediator)
     public async Task<StoreBasketResult> Handle(StoreBasketCommand request, CancellationToken cancellationToken)
     {
         ShoppingCart cart = request.Cart;
-        string EventMessage = string.Empty;
-        await _mediator.Publish(new BasketCreatedDomainEvent(cart, EventMessage), cancellationToken);
+        await DeductDiscount(cart, cancellationToken);
+        await _mediator.Publish(new BasketCreatedDomainEvent(cart, string.Empty), cancellationToken);
         return new StoreBasketResult(cart.UserName);
     }
+
+    private async Task DeductDiscount(ShoppingCart cart,CancellationToken cancellationToken)
+    {
+        foreach (var item in cart.Items)
+        {
+            var coupon = await discount.GetDiscountAsync(new GetDiscountRequest { ProductName = item.ProductName }, cancellationToken: cancellationToken);
+            item.Price -= coupon.Amount;
+        }
+    }
+
 
     protected virtual void OnSuccess<TEvent>(TEvent @event) where TEvent : IEvent
     {

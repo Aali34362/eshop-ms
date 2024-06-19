@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+//Application Services
 var assembly = typeof(Program).Assembly;
+builder.Services.AddCarter();
 builder.Services.AddMediatR(
     config =>
     {
@@ -12,6 +14,7 @@ builder.Services.AddMediatR(
 ////builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddValidatorsFromAssembly(assembly);
 
+//Data Services
 builder.Services.AddMarten(
     opts =>
     {
@@ -36,11 +39,17 @@ builder.Services.AddStackExchangeRedisCache( options => {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     //options.InstanceName = "Basket";
 });
-builder.Services.AddCarter();
+
+//GRPC Services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opts => {
+    opts.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+
+});
+
+//Cross-Cutting Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-
 builder.Services.AddWatchDogServices(opt =>
 {
     opt.IsAutoClear = true;
@@ -71,6 +80,7 @@ app.UseHealthChecks("/health",
     }
     );
 ////app.UseWatchDogExceptionLogger();
+
 app.UseWatchDog(opt =>
 {
     opt.WatchPageUsername = "admin";
