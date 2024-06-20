@@ -411,3 +411,94 @@ Patterns and Principles of Ordering
    Asp.Net DI, Routing with lastest asp.net 8 features
 
 
+SOLID
+S-Single Responsibility:
+	Each of your components or modules should responsible only one functionality
+
+O-Open/Closed Principle:
+	When we design the system, it should able to extend without changing existing architecture.
+
+L-Liskov's Substitution Principle:
+	Systems can be substitute each other easily. In our case we can use plug-in services that we can shift them easily.
+
+I-Interface Segragation:
+	States that no code should be forced to depend on methods it doesnt use.
+
+D-Dependency Inversion:
+	Stats that high level modules should not depend on low level modules both should depend on abstractions.
+	Provide to broke dependency of classes by inverting dependencies, inject dependent classes via contructor.
+	Upper level modules or classes and lower level classes must not be dependent on modules
+	Lower level modules must be dependent on higher-level modules(interface of modules)
+	Without Dependency Inversion :
+		(Business)Business Logic -> (Data Access)SqlDatabase
+	With Dependency Inversion :
+		(Business)Business Logic -> (interface)IRepository <- (Data Access)SqlDatabase
+
+Separation of Concerns (SoC):
+	It is one of the core software design principle
+	It is a design principle for separating a computer program into distinct sections.
+	Isolate the software application into separate sections, manages complexity by partitioning the software system
+	Distinguish between the concepts of layer and tiers with certain responsibilities.
+	Elements in the software should be unique
+	Limits to allocate responsibilities
+	Low-coupling, high-cohesion
+
+
+Domain Driven Design:
+	DDD has been around since Eric Evans published his book about the subject  in 2003
+	DDD is solving a complex problem is to break the problem into smaller parts and focus on smaller problems that are relative easy.
+	A complex domain may contain sub domains. And some of sub domains can combine and grouping with each other for common rules and responsibilities.
+
+	Types of DDD:
+		Strategic DDD:
+			Understanding and modeling the business domain.
+			It involves identifying the different domains, their subdomains, and how they interact with each other
+
+		Tactical DDD:
+			Implementation details and provides design patterns.
+			Including patterns life Entities, Value Objects, Aggregates, etc.
+	
+	Domain Concepts:
+		Domain,Sub Domain, Ubiquitous Langauge, Bounded Context, Context Mapping
+	Domain:
+		The sphere of knowledge and activity around which the application logic revolves.
+		Represents the problem space- the area of expertise or business need that the software addressess.
+	SubDomain:
+		Represents a specific area of expertise within the overall domain.
+	Ubiquitous Langauge:
+		Common Language used by developers and domain experts to ensure clarity and consistency.
+		
+Clean Architecture:
+Introduced by Robert C. Martin also know as Uncle Bob.
+Software architecture design that aims to separate concerns and create systems that are independent of frameworks,UI and DB
+Leads to system that are more maintainable, flexible, and adaptable to changes.
+
+Key Principles:
+	Independence of Frameworks:
+		The system is not tightly coupled with a specific framework, which makes it adaptable to changes in frameworks and tools.
+	Testable:
+		The business rules can be tested without the UI, DB, web servers or any external element.
+	UI Agnostic:
+		The UI can change easilym without changing the rest of the system.
+	Database Agnostic:
+		Business rules are not bound to the database, decoupled from the underlying data store.
+	External System Agnostic:
+		Business rules dont know anything about the outside world, isolated.
+
+	Layers : 
+	Enity Layer :
+		Contains enterprise-wide business rules.
+		Entitues encapsulate the most general and high level rules
+	Application Layer:
+		Contains applications - specific business rules.
+		Encapsulates and implements all the use cases of the system.
+	Interfaces Adapters Layer(Infrastructure Layer):
+		Converts data from the format most convenient for the use cases and entities to the format most convenient for external systems.
+	Frameworks and Drivers Layer (Infrastructure/External Concerns):
+		The outermost layer consisting of frameworkd and tools such as the DB the Web Framework. etc
+		General includes the UI, DB and external interfaces etc.
+
+
+
+
+

@@ -14,4 +14,12 @@
     <Folder Include="Orders\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Behavior\Base.Behavior.csproj" />
+    <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Exceptions\Base.Exceptions.csproj" />
+    <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Extensions\Base.Extensions.csproj" />
+    <ProjectReference Include="..\..\..\Packaged\BasePackage\Base\Base.csproj" />
+    <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
