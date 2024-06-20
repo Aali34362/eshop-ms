@@ -1124,6 +1124,135 @@ Conclusion
 Applying the KISS principle helps in writing clean, efficient, and maintainable code. It encourages developers to avoid unnecessary complexity and focus on solving the problem at hand in the simplest way possible. This leads to a more robust and scalable codebase, ultimately benefiting both developers and users.
 
 -----------------------------------------------------
+YAGNI (You Aren't Gonna Need It):
+YAGNI is a principle of software development that states you should not add functionality until it is necessary. The idea is to avoid the temptation to write code that anticipates future needs, which often leads to wasted effort and unnecessary complexity.
+Key Points of YAGNI
+
+    Avoid Premature Optimization: Focus on current requirements, not hypothetical future needs.
+    Simplify Codebase: Write only the code that is needed for the current functionality.
+    Reduce Maintenance: Less code means fewer bugs and less effort required for maintenance.
+    Improve Focus: Concentrate on delivering features that add immediate value to users.
+
+Examples of YAGNI in Practice
+Example 1: Feature Development
+
+Before Applying YAGNI:
+public class User
+{
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; } // Future feature: SMS notifications
+
+    public User(string username, string email)
+    {
+        Username = username;
+        Email = email;
+        PhoneNumber = ""; // Placeholder for future feature
+    }
+}
+In this example, the PhoneNumber property is added in anticipation of a future feature (SMS notifications) that is not currently required.
+
+After Applying YAGNI:
+public class User
+{
+    public string Username { get; set; }
+    public string Email { get; set; }
+
+    public User(string username, string email)
+    {
+        Username = username;
+        Email = email;
+    }
+}
+
+By removing the PhoneNumber property, the class is simplified to include only the currently necessary functionality.
+Example 2: Avoiding Overly Complex Interfaces
+Before Applying YAGNI:
+public interface IReportGenerator
+{
+    void GeneratePDFReport();
+    void GenerateExcelReport(); // Future feature: Excel report generation
+    void GenerateWordReport();  // Future feature: Word report generation
+}
+
+public class PDFReportGenerator : IReportGenerator
+{
+    public void GeneratePDFReport()
+    {
+        // Generate PDF report
+    }
+
+    public void GenerateExcelReport()
+    {
+        // Not implemented yet
+        throw new NotImplementedException();
+    }
+
+    public void GenerateWordReport()
+    {
+        // Not implemented yet
+        throw new NotImplementedException();
+    }
+}
+The interface includes methods for generating Excel and Word reports, which are not currently needed, leading to unimplemented methods and potential confusion.
+
+After Applying YAGNI:
+public interface IReportGenerator
+{
+    void GeneratePDFReport();
+}
+
+public class PDFReportGenerator : IReportGenerator
+{
+    public void GeneratePDFReport()
+    {
+        // Generate PDF report
+    }
+}
+By simplifying the interface to include only the currently required method, the design is cleaner and easier to understand.
+Example 3: Refactoring Classes
+
+Before Applying YAGNI:
+public class UserManager
+{
+    public void RegisterUser(string username, string email)
+    {
+        // Registration logic
+    }
+
+    public void RegisterUser(string username, string email, string phoneNumber)
+    {
+        // Registration logic with phone number
+    }
+}
+The UserManager class includes an overloaded method anticipating future requirements (registering with a phone number) that are not currently needed.
+
+After Applying YAGNI
+public class UserManager
+{
+    public void RegisterUser(string username, string email)
+    {
+        // Registration logic
+    }
+}
+By removing the unnecessary overload, the class is simplified to handle the current requirements only.
+Benefits of YAGNI
+
+    Efficiency: Focuses development efforts on delivering immediate value.
+    Simplicity: Reduces complexity in the codebase, making it easier to understand and maintain.
+    Agility: Allows for quicker adaptation to changing requirements, as the codebase is not burdened with unused features.
+    Cost-Effective: Saves time and resources by avoiding unnecessary work on features that may never be used.
+
+Conclusion
+
+The YAGNI principle encourages developers to resist the urge to build features or add functionality that is not immediately necessary. By adhering to YAGNI, you can create a more maintainable, focused, and efficient codebase, ultimately leading to better software and a more streamlined development process.
+
+---------------------------------------------------------
+
+
+
+---------------------------------------------------------
+
 Domain Driven Design:
 	DDD has been around since Eric Evans published his book about the subject  in 2003
 	DDD is solving a complex problem is to break the problem into smaller parts and focus on smaller problems that are relative easy.
