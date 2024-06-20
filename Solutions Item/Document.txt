@@ -813,6 +813,167 @@ Separation of Concerns (SoC):
 	Elements in the software should be unique
 	Limits to allocate responsibilities
 	Low-coupling, high-cohesion
+Separation of Concerns (SoC) is a design principle in software engineering that aims to break a program into distinct sections, each addressing a separate concern. A concern is any piece of interest or responsibility that the software has to address. By separating concerns, you can improve code readability, maintainability, and scalability.
+Key Points of SoC
+
+    Modularity: Divide a program into modules, each responsible for a distinct aspect of the application's functionality.
+    Maintainability: Simplify the codebase, making it easier to update or fix bugs in one module without affecting others.
+    Reusability: Allow modules to be reused across different parts of the application or even in different projects.
+    Testability: Facilitate easier testing by isolating different parts of the code.
+
+Examples of SoC
+1. MVC Architecture
+
+The Model-View-Controller (MVC) architecture is a common way to implement SoC in web applications. Each component handles a specific aspect of the application:
+
+    Model: Manages the data and business logic.
+    View: Manages the display and presentation of data.
+    Controller: Manages user input and interactions, updating the Model and View accordingly.
+
+Example in C#:
+// Model
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+}
+
+// View
+public class ProductView
+{
+    public void DisplayProductDetails(Product product)
+    {
+        Console.WriteLine($"Product: {product.Name}, Price: {product.Price:C}");
+    }
+}
+
+// Controller
+public class ProductController
+{
+    private readonly Product _product;
+    private readonly ProductView _view;
+
+    public ProductController(Product product, ProductView view)
+    {
+        _product = product;
+        _view = view;
+    }
+
+    public void UpdateProductName(string name)
+    {
+        _product.Name = name;
+    }
+
+    public void UpdateProductPrice(decimal price)
+    {
+        _product.Price = price;
+    }
+
+    public void DisplayProduct()
+    {
+        _view.DisplayProductDetails(_product);
+    }
+}
+
+// Usage
+var product = new Product { Id = 1, Name = "Laptop", Price = 999.99M };
+var view = new ProductView();
+var controller = new ProductController(product, view);
+
+controller.DisplayProduct();
+controller.UpdateProductName("Gaming Laptop");
+controller.DisplayProduct();
+
+2. Layered Architecture
+
+A layered architecture separates the application into layers, each with a specific responsibility:
+
+    Presentation Layer: Handles the user interface and presentation logic.
+    Business Logic Layer: Contains the core functionality and business rules.
+    Data Access Layer: Manages data persistence and retrieval.
+
+Example in C#:
+// Data Access Layer
+public class ProductRepository
+{
+    public Product GetProductById(int id)
+    {
+        // Simulate data retrieval from a database
+        return new Product { Id = id, Name = "Laptop", Price = 999.99M };
+    }
+
+    public void SaveProduct(Product product)
+    {
+        // Simulate saving to a database
+        Console.WriteLine("Product saved to database.");
+    }
+}
+
+// Business Logic Layer
+public class ProductService
+{
+    private readonly ProductRepository _repository;
+
+    public ProductService(ProductRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public Product GetProduct(int id)
+    {
+        return _repository.GetProductById(id);
+    }
+
+    public void UpdateProduct(Product product)
+    {
+        _repository.SaveProduct(product);
+    }
+}
+
+// Presentation Layer
+public class ProductController
+{
+    private readonly ProductService _service;
+
+    public ProductController(ProductService service)
+    {
+        _service = service;
+    }
+
+    public void DisplayProduct(int id)
+    {
+        var product = _service.GetProduct(id);
+        Console.WriteLine($"Product: {product.Name}, Price: {product.Price:C}");
+    }
+
+    public void UpdateProduct(int id, string name, decimal price)
+    {
+        var product = _service.GetProduct(id);
+        product.Name = name;
+        product.Price = price;
+        _service.UpdateProduct(product);
+    }
+}
+
+// Usage
+var repository = new ProductRepository();
+var service = new ProductService(repository);
+var controller = new ProductController(service);
+
+controller.DisplayProduct(1);
+controller.UpdateProduct(1, "Gaming Laptop", 1299.99M);
+controller.DisplayProduct(1);
+Benefits of SoC
+
+    Improved Readability: Each module has a clear and distinct responsibility, making the code easier to understand.
+    Enhanced Maintainability: Changes to one part of the application are less likely to impact others, reducing the risk of bugs.
+    Reusability: Modules can often be reused in other parts of the application or in different projects.
+    Better Collaboration: Teams can work on different modules independently, facilitating parallel development.
+    Easier Testing: Modules can be tested in isolation, ensuring that individual parts work correctly before integrating them.
+
+By applying the principle of Separation of Concerns, you can create a well-organized, modular, and maintainable codebase, leading to more robust and scalable software.
+
 
 
 Domain Driven Design:
