@@ -414,15 +414,268 @@ Patterns and Principles of Ordering
 SOLID
 S-Single Responsibility:
 	Each of your components or modules should responsible only one functionality
+	A class should have only one reason to change. This means that a class should have only one job or responsibility.
+// Before applying SRP
+public class Invoice
+{
+    public void CalculateTotal() { /* ... */ }
+    public void PrintInvoice() { /* ... */ }
+    public void SaveToFile() { /* ... */ }
+}
+
+// After applying SRP
+public class Invoice
+{
+    public void CalculateTotal() { /* ... */ }
+}
+
+public class InvoicePrinter
+{
+    public void PrintInvoice(Invoice invoice) { /* ... */ }
+}
+
+public class InvoiceSaver
+{
+    public void SaveToFile(Invoice invoice) { /* ... */ }
+}
+
 
 O-Open/Closed Principle:
 	When we design the system, it should able to extend without changing existing architecture.
+	Software entities should be open for extension but closed for modification. This means you should be able to add new functionality without changing existing code.
+// Before applying OCP
+public class Rectangle
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+}
+
+public class AreaCalculator
+{
+    public double CalculateArea(Rectangle rectangle)
+    {
+        return rectangle.Width * rectangle.Height;
+    }
+}
+
+// After applying OCP
+public abstract class Shape
+{
+    public abstract double CalculateArea();
+}
+
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+
+    public override double CalculateArea()
+    {
+        return Width * Height;
+    }
+}
+
+public class Circle : Shape
+{
+    public double Radius { get; set; }
+
+    public override double CalculateArea()
+    {
+        return Math.PI * Radius * Radius;
+    }
+}
+
+public class AreaCalculator
+{
+    public double CalculateArea(Shape shape)
+    {
+        return shape.CalculateArea();
+    }
+}
+
 
 L-Liskov's Substitution Principle:
 	Systems can be substitute each other easily. In our case we can use plug-in services that we can shift them easily.
+	Objects of a superclass should be replaceable with objects of its subclasses without affecting the correctness of the program.
+Key Points of LSP
+
+    Behavioral Compatibility: Subtypes must be able to replace their supertypes without altering the desirable properties of the program (e.g., correctness, task performed).
+    Preconditions and Postconditions: The preconditions of a subclass method should not be stronger than those of the superclass method. The postconditions of a subclass method should not be weaker than those of the superclass method.
+    Invariants: The invariants of the superclass must be preserved in the subclass.
+
+Violations of LSP
+
+Violations of LSP often occur when a subclass overrides a method in a way that breaks the behavior expected by clients of the superclass. This can lead to unexpected errors and bugs.
+Example of LSP in C#
+Before Applying LSP
+public class Bird
+{
+    public virtual void Fly()
+    {
+        Console.WriteLine("Flying");
+    }
+}
+
+public class Sparrow : Bird
+{
+    // Sparrow can fly
+}
+
+public class Ostrich : Bird
+{
+    public override void Fly()
+    {
+        throw new InvalidOperationException("Ostrich can't fly!");
+    }
+}
+
+public class BirdController
+{
+    public void MakeBirdFly(Bird bird)
+    {
+        bird.Fly();
+    }
+}
+
+// Usage
+BirdController controller = new BirdController();
+controller.MakeBirdFly(new Sparrow()); // Works fine
+controller.MakeBirdFly(new Ostrich()); // Throws exception
+
+In the above example, Ostrich cannot fly, which violates the LSP because Ostrich is not a proper substitute for Bird.
+After Applying LSP
+
+To comply with LSP, we should refactor the code so that subclasses can be substituted for their base classes without altering the program behavior:
+public abstract class Bird
+{
+    // Common properties and methods for all birds
+}
+
+public interface IFlyable
+{
+    void Fly();
+}
+
+public class Sparrow : Bird, IFlyable
+{
+    public void Fly()
+    {
+        Console.WriteLine("Flying");
+    }
+}
+
+public class Ostrich : Bird
+{
+    // Ostrich specific properties and methods
+}
+
+public class BirdController
+{
+    public void MakeBirdFly(IFlyable bird)
+    {
+        bird.Fly();
+    }
+}
+
+// Usage
+BirdController controller = new BirdController();
+controller.MakeBirdFly(new Sparrow()); // Works fine
+// controller.MakeBirdFly(new Ostrich()); // Won't compile, prevents runtime error
+This refactoring ensures that the Liskov Substitution Principle is maintained, as Sparrow can be used interchangeably with IFlyable without causing errors, while Ostrich cannot, thus avoiding the incorrect behavior.
+
 
 I-Interface Segragation:
 	States that no code should be forced to depend on methods it doesnt use.
+	 It states that no client should be forced to depend on methods it does not use. This principle aims to keep interfaces small and focused, ensuring that implementing classes only need to be concerned with methods that are relevant to them.
+	Key Points of ISP
+
+    Client-Specific Interfaces: Interfaces should be specific to the needs of a particular client or group of clients, rather than general-purpose interfaces that contain methods unrelated to some clients.
+    Reduce Unnecessary Dependencies: By splitting larger interfaces into smaller ones, classes are not burdened with implementing methods they do not need, reducing the impact of changes and making the system more flexible and easier to maintain.
+    Promote Decoupling: Smaller, client-specific interfaces reduce coupling between classes, leading to a more modular and maintainable codebase.
+
+	Violations of ISP
+
+	Violations of ISP occur when an interface contains methods that some implementing classes do not need. This forces classes to implement unnecessary methods or use workarounds, leading to bloated and less maintainable code.
+	Example of ISP in C#
+	
+	Let's consider an example to illustrate the ISP:
+	Before Applying ISP
+	
+	In this example, we have a Worker interface that includes both Work and Eat methods. However, a robot that only works and doesn't need to eat would still be forced to implement the Eat method, which is unnecessary.
+public interface IWorker
+{
+    void Work();
+    void Eat();
+}
+
+public class HumanWorker : IWorker
+{
+    public void Work()
+    {
+        Console.WriteLine("Human working");
+    }
+
+    public void Eat()
+    {
+        Console.WriteLine("Human eating");
+    }
+}
+
+public class RobotWorker : IWorker
+{
+    public void Work()
+    {
+        Console.WriteLine("Robot working");
+    }
+
+    public void Eat()
+    {
+        throw new NotImplementedException("Robot doesn't need to eat");
+    }
+}
+Here, RobotWorker has to implement the Eat method, even though it does not make sense for a robot to eat. This violates ISP because RobotWorker depends on an unnecessary method.
+After Applying ISP
+
+To comply with ISP, we should split the IWorker interface into two smaller, more specific interfaces:
+public interface IWorkable
+{
+    void Work();
+}
+
+public interface IFeedable
+{
+    void Eat();
+}
+
+public class HumanWorker : IWorkable, IFeedable
+{
+    public void Work()
+    {
+        Console.WriteLine("Human working");
+    }
+
+    public void Eat()
+    {
+        Console.WriteLine("Human eating");
+    }
+}
+
+public class RobotWorker : IWorkable
+{
+    public void Work()
+    {
+        Console.WriteLine("Robot working");
+    }
+}
+Benefits of ISP
+
+    Flexibility: Smaller, specific interfaces allow classes to be more flexible in their implementation.
+    Maintainability: Changes to an interface are less likely to impact classes that do not use the changed methods, making the codebase easier to maintain.
+    Clarity: Smaller interfaces provide clear and focused contracts, making the code more understandable and easier to work with.
+
+By applying the Interface Segregation Principle, we can create a more modular and maintainable system, where classes are not burdened with unnecessary dependencies.
+
+
 
 D-Dependency Inversion:
 	Stats that high level modules should not depend on low level modules both should depend on abstractions.
@@ -433,6 +686,124 @@ D-Dependency Inversion:
 		(Business)Business Logic -> (Data Access)SqlDatabase
 	With Dependency Inversion :
 		(Business)Business Logic -> (interface)IRepository <- (Data Access)SqlDatabase
+
+It states that high-level modules should not depend on low-level modules. Both should depend on abstractions. Additionally, abstractions should not depend on details. Details should depend on abstractions.
+Key Points of DIP
+
+    Abstractions: Depend on abstractions (e.g., interfaces or abstract classes) rather than concrete implementations.
+    Inversion of Control: Achieve inversion of control by using design patterns such as Dependency Injection, Service Locator, or Factory Method.
+    Decoupling: Promotes decoupling of high-level and low-level modules, making the code more flexible and easier to maintain.
+
+Violations of DIP
+
+Violations of DIP occur when high-level modules directly depend on low-level modules. This leads to tightly coupled code that is difficult to change and maintain.
+Example of DIP in C#
+
+Let's consider an example to illustrate the DIP:
+Before Applying DIP
+
+In this example, the LightSwitch class directly depends on the LightBulb class:
+public class LightBulb
+{
+    public void TurnOn()
+    {
+        Console.WriteLine("LightBulb: On");
+    }
+
+    public void TurnOff()
+    {
+        Console.WriteLine("LightBulb: Off");
+    }
+}
+
+public class LightSwitch
+{
+    private LightBulb _lightBulb;
+
+    public LightSwitch(LightBulb lightBulb)
+    {
+        _lightBulb = lightBulb;
+    }
+
+    public void Operate()
+    {
+        _lightBulb.TurnOn();
+    }
+}
+
+// Usage
+LightBulb lightBulb = new LightBulb();
+LightSwitch lightSwitch = new LightSwitch(lightBulb);
+lightSwitch.Operate();
+
+In this code, the LightSwitch class is tightly coupled to the LightBulb class. If we want to change the type of the device being switched, we need to modify the LightSwitch class.
+After Applying DIP
+
+To comply with DIP, we introduce an abstraction (an interface) that both the high-level module (LightSwitch) and low-level module (LightBulb) depend on:
+public interface ISwitchable
+{
+    void TurnOn();
+    void TurnOff();
+}
+
+public class LightBulb : ISwitchable
+{
+    public void TurnOn()
+    {
+        Console.WriteLine("LightBulb: On");
+    }
+
+    public void TurnOff()
+    {
+        Console.WriteLine("LightBulb: Off");
+    }
+}
+
+public class Fan : ISwitchable
+{
+    public void TurnOn()
+    {
+        Console.WriteLine("Fan: On");
+    }
+
+    public void TurnOff()
+    {
+        Console.WriteLine("Fan: Off");
+    }
+}
+
+public class LightSwitch
+{
+    private ISwitchable _device;
+
+    public LightSwitch(ISwitchable device)
+    {
+        _device = device;
+    }
+
+    public void Operate()
+    {
+        _device.TurnOn();
+    }
+}
+
+// Usage
+ISwitchable lightBulb = new LightBulb();
+LightSwitch lightSwitch = new LightSwitch(lightBulb);
+lightSwitch.Operate();
+
+ISwitchable fan = new Fan();
+LightSwitch fanSwitch = new LightSwitch(fan);
+fanSwitch.Operate();
+
+Benefits of DIP
+
+    Flexibility: Code becomes more flexible and easier to extend.
+    Maintainability: Changes in low-level modules do not affect high-level modules.
+    Testability: Code is easier to test because dependencies can be easily mocked or stubbed.
+    Decoupling: Reduces the coupling between high-level and low-level modules, promoting a more modular architecture.
+
+By applying the Dependency Inversion Principle, you create a more maintainable and scalable codebase, where high-level modules are decoupled from low-level modules, and both depend on abstractions. This leads to a more flexible and robust design.
 
 Separation of Concerns (SoC):
 	It is one of the core software design principle
@@ -501,4 +872,49 @@ Key Principles:
 
 
 
+Design patterns and principles are essential concepts in software development that help create well-structured, maintainable, and scalable code. Here's an overview of some key design patterns and principles:
+Design Patterns
+
+Design patterns are typical solutions to common problems in software design. They can be categorized into three main types: creational, structural, and behavioral.
+Creational Patterns
+
+    Singleton: Ensures a class has only one instance and provides a global point of access to it.
+    Factory Method: Defines an interface for creating an object but allows subclasses to alter the type of objects that will be created.
+    Abstract Factory: Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+    Builder: Separates the construction of a complex object from its representation so that the same construction process can create different representations.
+    Prototype: Specifies the kinds of objects to create using a prototypical instance and creates new objects by copying this prototype.
+
+Structural Patterns
+
+    Adapter: Allows objects with incompatible interfaces to work together.
+    Bridge: Separates an object’s abstraction from its implementation so that both can vary independently.
+    Composite: Composes objects into tree structures to represent part-whole hierarchies. It lets clients treat individual objects and compositions of objects uniformly.
+    Decorator: Adds additional functionality to an object dynamically.
+    Facade: Provides a simplified interface to a complex subsystem.
+    Flyweight: Reduces the cost of creating and manipulating a large number of similar objects.
+    Proxy: Provides a surrogate or placeholder for another object to control access to it.
+
+Behavioral Patterns
+
+    Chain of Responsibility: Passes a request along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
+    Command: Encapsulates a request as an object, thereby allowing for parameterization of clients with queues, requests, and operations.
+    Interpreter: Defines a grammatical representation for a language and an interpreter to deal with this grammar.
+    Iterator: Provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+    Mediator: Defines an object that encapsulates how a set of objects interact.
+    Memento: Provides the ability to restore an object to its previous state.
+    Observer: Defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+    State: Allows an object to alter its behavior when its internal state changes. The object will appear to change its class.
+    Strategy: Defines a family of algorithms, encapsulates each one, and makes them interchangeable.
+    Template Method: Defines the skeleton of an algorithm in an operation, deferring some steps to subclasses.
+    Visitor: Represents an operation to be performed on the elements of an object structure. It lets you define a new operation without changing the classes of the elements on which it operates.
+
+Design Principles
+
+Design principles are guidelines for writing clean, scalable, and maintainable code. The most well-known set of design principles is SOLID, which stands for:
+
+    Single Responsibility Principle (SRP): A class should have one and only one reason to change, meaning it should only have one job or responsibility.
+    Open/Closed Principle (OCP): Software entities should be open for extension but closed for modification.
+    Liskov Substitution Principle (LSP): Objects of a superclass should be replaceable with objects of its subclasses without affecting the correctness of the program.
+    Interface Segregation Principle (ISP): No client should be forced to depend on methods it does not use. This means many client-specific interfaces are better than one general-purpose interface.
+    Dependency Inversion Principle (DIP): High-level modules should not depend on low-level modules. Both should depend on abstractions. Additionally, abstractions should not depend on details. Details should depend on abstractions.
 
