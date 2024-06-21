@@ -2120,4 +2120,13 @@ Design principles are guidelines for writing clean, scalable, and maintainable c
     Example: In the order Aggregate, Order itselff can be the Aggregate Root. 
     External objects would interact with Order to affect changes within the Aggregate.
 
+-------------------------------------------------------------
+Primitive Obsession:
+It is a code smell where primitives(like string, int, Guid) are used for domain concepts, leading to ambiguity and errors.
+Using Guid or String for an orderID, CustomerId, or ProductId makes it easy to mix these identifiers up, as they're all of the same type.
+
+Strongly Type Ids:
+Creating distinct types for each kind of ID in your domain.
+This makes your code more expressive and less error-prone.
+It clarifies which type of ID is expected and prevents accidentally using one type of ID(like a productID) where another (like an orderID) is intended
 

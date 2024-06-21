@@ -2,15 +2,16 @@
 
 public class OrderItem : Entity<Guid>
 {
-    internal OrderItem(Guid OrderId, Guid ProductId, int Quantity, decimal Price) 
+    internal OrderItem(OrderId OrderId, ProductId ProductId, int Quantity, decimal Price) 
     {
+        Id = OrderItemId.Of(Guid.NewGuid());
         this.OrderId = OrderId;
         this.ProductId = ProductId;
         this.Quantity = Quantity;
         this.Price = Price;
     }
-    public Guid OrderId { get; private set; } = default!;
-    public Guid ProductId { get; private set; } = default!;
+    public OrderId OrderId { get; private set; } = default!;
+    public ProductId ProductId { get; private set; } = default!;
     public int Quantity { get; private set; } = default!;
     public decimal Price { get; private set; } = default!;
 }
