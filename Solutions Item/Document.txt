@@ -2089,4 +2089,35 @@ Design principles are guidelines for writing clean, scalable, and maintainable c
     Dependency Inversion Principle (DIP): High-level modules should not depend on low-level modules. Both should depend on abstractions. Additionally, abstractions should not depend on details. Details should depend on abstractions.
 
     --------------------------------------------------------------------------------------------
+    Tatical DDD:
+    it is a set of patterns and principles that help in modeling complex software systems.
+    Focuses on the domain and domain logic, importance of a model that reflects the business and its rules.
+    Entities, Value Objects, Aggregates and Aggregate Root.
+
+    Entities :
+    It is an object that is identified by its identity(ID) rather than its attributes.
+    Identity makes each entity unique, even if other attributes are the same.
+    Entities are used to represent objects in the system that have a distinct identity and lifecycle.
+    Example: Ordering microservices, an Order can be an Entity..
+    It is uniquely identified by an OrderId, even if other attributes(like date, total amount) are identical to another  order.
+
+    Value Objects:
+    It is an object that describes some characteristics or attribute but carries no concept of identity.
+    Value Objects are used to describe aspects of the domain with no conceptual identity.
+    They are immutable and are often used to encapsulate complex attributes.
+    Example: An Address used in an Order might be Value Object, as it is important for the order but does not define the order's identity.
+
+    Aggregates:
+    It is a cluster of domain objects(Entities and Value Object) that can be treated as a single unit.
+    Aggregate will have one of its components be the Aggregate Root.
+    Define a boundary around related objects.
+    Operations within the boundary should maintain consiistency of changes to data in an Aggregate.
+    Example: Order can be an Aggregate, containing OrderItems, PaymentDetails, etc. within it. The consistency of an order (like, total price calculation, stock validation) is maintained within the Aggregate boundaries.
+
+    Aggregate Roots:
+    Aggregate Root is the main Entity in an Aggrate, through which external objects interact with the Aggregate.
+    Provides a gateway to the Aggregate, ensuring that the Aggregate's invariants are enforced and consistency is maintained.
+    Example: In the order Aggregate, Order itselff can be the Aggregate Root. 
+    External objects would interact with Order to affect changes within the Aggregate.
+
 
