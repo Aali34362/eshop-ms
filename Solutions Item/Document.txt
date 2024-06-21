@@ -2130,3 +2130,19 @@ Creating distinct types for each kind of ID in your domain.
 This makes your code more expressive and less error-prone.
 It clarifies which type of ID is expected and prevents accidentally using one type of ID(like a productID) where another (like an orderID) is intended
 
+-----------------------------------------------------------------------
+Anemic Domain Model Entity:
+Entity have little or no business logic(domain logic).
+Essentially DS with getters and setters.
+But the business rules and behaviors are typically implemented outside the entity, often in service layers.
+Order class is anemic because it only contains data and lacks any domain logic or behaviors.
+Business logic is scattered across the application, often in services.
+Entities are simple data containers and easier to understand initially,
+but it can lead to issues with maintainability and understanding the business logic by time.
+
+
+Rich-Domain Model Entity
+Entities encapsulate both data and behavior.
+This model enriches entities with methods that embody business rules and domain logic.
+Order is rich domain model as it includes methods AddOrderItems and RemoveOrderItem which encapsulate the business logic for manipulating the order items.
+It encapsulates the business logic within the entities more closely, represent the real world business domain, and it can be more complex to design, but leads to a more maintainable and cohesive model.
