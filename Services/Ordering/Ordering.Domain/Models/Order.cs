@@ -3,8 +3,7 @@
 public class Order : Aggregate<Guid>
 {
     private readonly List<OrderItem> _orderItems = [];
-
-    public IReadOnlyList<OrderItem> OrderItems = _orderItems.AsReadOnly();
+    public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
     public Guid CustomerId { get; private set; } = default!;// we set 'private set;' so this property cant be settable from outside world.
     public string OrderName { get; private set; } = default!;
