@@ -1,5 +1,12 @@
-﻿namespace Ordering.Infrastructure;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-internal class DependencyInjection
+namespace Ordering.Infrastructure;
+
+public static class DependencyInjection
 {
+    public static IServiceCollection AddInfrastructureService(this IServiceCollection services)
+    {
+
+        return services;
+    }
 }

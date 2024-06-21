@@ -2088,3 +2088,5 @@ Design principles are guidelines for writing clean, scalable, and maintainable c
     Interface Segregation Principle (ISP): No client should be forced to depend on methods it does not use. This means many client-specific interfaces are better than one general-purpose interface.
     Dependency Inversion Principle (DIP): High-level modules should not depend on low-level modules. Both should depend on abstractions. Additionally, abstractions should not depend on details. Details should depend on abstractions.
 
+    --------------------------------------------------------------------------------------------
+

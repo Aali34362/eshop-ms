@@ -1,5 +1,12 @@
-﻿namespace Ordering.Application;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-public class DependencyInjection
+namespace Ordering.Application;
+
+public static class DependencyInjection
 {
+    public static IServiceCollection AddApplicationService(this IServiceCollection services)
+    {
+
+        return services;
+    }
 }
