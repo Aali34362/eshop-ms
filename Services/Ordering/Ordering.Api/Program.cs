@@ -7,10 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 //Application - MediatR
 //API - Carter, HealthChecks,....
 
-//builder.Services
-//    .AddApplicationServices()
-//    .AddInfrastructureServices(builder.Configuration)
-//    .AddWebServices();
+builder.Services
+    .AddApplicationService()
+    .AddInfrastructureService(builder.Configuration)
+    .AddWebService();
 //-------------------
 
 var app = builder.Build();
