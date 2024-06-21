@@ -1,5 +1,6 @@
 ﻿namespace Ordering.Domain.Abstractions;
 
+//Interface Segregation Pattern
 public abstract class Entity<T> : IEntity<T>
 {
     public T Id { get; set; }
