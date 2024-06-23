@@ -1,6 +1,4 @@
-﻿using Ordering.Domain.ValueObjects;
-
-namespace Ordering.Domain.Models;
+﻿namespace Ordering.Domain.Models;
 
 public class Order : Aggregate<OrderId>
 {
@@ -34,7 +32,6 @@ public class Order : Aggregate<OrderId>
         order.AddDomainEvent(new OrderCreatedEvent(order));
         return order;
     }
-
     public void Update(OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)
     {
         OrderName = orderName;
@@ -44,7 +41,6 @@ public class Order : Aggregate<OrderId>
         Status = status;
         AddDomainEvent(new OrderUpdatedEvent(this));
     }
-
     public void Add(ProductId productId, int quantity, decimal price)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);

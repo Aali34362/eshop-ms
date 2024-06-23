@@ -2146,3 +2146,29 @@ Entities encapsulate both data and behavior.
 This model enriches entities with methods that embody business rules and domain logic.
 Order is rich domain model as it includes methods AddOrderItems and RemoveOrderItem which encapsulate the business logic for manipulating the order items.
 It encapsulates the business logic within the entities more closely, represent the real world business domain, and it can be more complex to design, but leads to a more maintainable and cohesive model.
+
+----------------------------------------------
+Domain Event in DDD:
+Domain Events represent something that happended in the past and the other parts of the same service boundary same domain need to react to these changes.
+Domain Event is a business event that occurs within the domain model.
+Achieve consistency between aggregates in same domain
+When an order is placed an OrderPlaced even might be triggered 
+Trigger side effect or notify other parts of the system about changes within the domain
+
+How to Use Domain Events in DDD?
+Encapsulate the event details and dispatch them to interested parties.
+
+Domain vs Integrations Events
+
+Domain
+Published and consumed within a single domain.
+Strictly within the boundary of the microservice/domain context.
+Indicate something that has happened within the aggregat.
+In-process and synchronously, send using an in-memory message bus
+
+Integration Events:
+Used to communicate state changes or events between contexts or microservices.
+Overall System's reaction to certain domain events
+Asynchronously, sent with a message broker over a queue
+Example After handling orderplaced event an OrderPlacedIntegrationEvent might be published to a message broker like RabbitMQ, then consumes by other Microservices.
+
