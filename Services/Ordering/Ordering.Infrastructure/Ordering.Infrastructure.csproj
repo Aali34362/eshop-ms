@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <ProjectReference Include="..\Ordering.Application\Ordering.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ordering.Application\Ordering.Application.csproj" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>
