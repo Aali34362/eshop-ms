@@ -11,3 +11,5 @@ Remove-Migration -Context DiscountContext
 Script-Migration -Context DiscountContext
 Script-Migration -Context DiscountContext -Idempotent
 Get-Migration -Context DiscountContext
+
+add-migration Ini	tialCreate -OutputDir Data/Migrations -Project Ordering.Infrastructure -StartupProject Ordering.Api
