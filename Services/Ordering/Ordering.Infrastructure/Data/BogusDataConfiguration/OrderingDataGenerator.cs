@@ -2,9 +2,13 @@
 
 namespace Ordering.Infrastructure.Data.BogusDataConfiguration;
 
-public class OrderingDataGenerator(ApplicationDbContext applicationDbContext)
+public class OrderingDataGenerator
 {
-    private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
+    private static ApplicationDbContext _applicationDbContext;
+    public OrderingDataGenerator(ApplicationDbContext dbContext)
+    {
+        _applicationDbContext = dbContext;
+    }
     public static Faker<Product> GetProductFaker()
     {
         return new Faker<Product>()
@@ -32,14 +36,19 @@ public class OrderingDataGenerator(ApplicationDbContext applicationDbContext)
             .RuleFor(c => c.LastModifiedBy, f => f.Person.UserName);
     }
 
-    private List<Product> GetProducts()
+    private static List<Product> GetProducts()
     {
         return _applicationDbContext.Products.ToList();
     }
 
-    private List<Customer> GetCustomer()
+    private static List<Customer> GetCustomer()
     {
         return _applicationDbContext.Customers.ToList();
+    }
+
+    private static List<OrderItem> GetOrderItem()
+    {
+        return _applicationDbContext.OrderItems.ToList();
     }
 
     #region Orders
@@ -69,10 +78,13 @@ public class OrderingDataGenerator(ApplicationDbContext applicationDbContext)
 
     public static Faker<OrderItem> GetOrderItemFaker()
     {
+        var productList = GetProducts();
+        Random random = new Random();
+        
         return new Faker<OrderItem>()
             .CustomInstantiator(f => new OrderItem(
                 OrderId.Of(f.Random.Guid()),
-                ProductId.Of(f.Random.Guid()),
+                ProductId.Of(productList.OrderBy(p => random.Next()).Select(p => p.Id).FirstOrDefault().Value),
                 f.Random.Int(1, 10),
                 f.Random.Decimal(1, 1000)));
     }
@@ -84,10 +96,16 @@ public class OrderingDataGenerator(ApplicationDbContext applicationDbContext)
         var paymentFaker = GetPaymentFaker();
         var orderItemFaker = GetOrderItemFaker();
 
+        Random random = new Random();
+        var productList = GetProducts();
+        var customerList = GetCustomer();
+        var orderItemsList = GetOrderItem();
+
+
         return new Faker<Order>()
             .CustomInstantiator(f => Order.Create(
                 OrderId.Of(f.Random.Guid()),
-                CustomerId.Of(f.Random.Guid()),
+                CustomerId.Of(customerList.OrderBy(p => random.Next()).Select(p => p.Id).FirstOrDefault().Value),
                 OrderName.Of(f.Commerce.ProductName()),
                 shippingAddressFaker.Generate(),
                 billingAddressFaker.Generate(),
