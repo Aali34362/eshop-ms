@@ -4,7 +4,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebService(this IServiceCollection services)
     {
-
+        //services.AddCarter();
         return services;
     }
 
