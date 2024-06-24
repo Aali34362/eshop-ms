@@ -8,4 +8,6 @@ public abstract class Entity<T> : IEntity<T>
     public string? CreatedBy { get; set; }
     public DateTime? LastModified { get; set; }
     public string? LastModifiedBy { get; set; }
+    public short? Act_Ind { get; set; } = 1;
+    public short? Del_Ind { get; set; } = 0;
 }

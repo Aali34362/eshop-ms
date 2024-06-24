@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Ordering.Infrastructure.Data;
 
@@ -14,5 +15,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(builder);
+
+        builder.Entity<Customer>().HasQueryFilter(e => e.Del_Ind == 0);
+        builder.Entity<Product>().HasQueryFilter(e => e.Del_Ind == 0);
+        builder.Entity<Order>().HasQueryFilter(e => e.Del_Ind == 0);
+        builder.Entity<OrderItem>().HasQueryFilter(e => e.Del_Ind == 0);
     }
 }
