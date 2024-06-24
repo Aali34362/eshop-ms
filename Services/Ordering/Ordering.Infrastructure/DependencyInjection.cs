@@ -6,7 +6,7 @@ public static class DependencyInjection
     {
         var connectionSettings = configuration.GetConnectionString("Database");
         services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(connectionSettings));
-        //services.AddScoped<IApplicationDbContext,ApplicationDbContext>();
+        ///services.AddScoped<IApplicationDbContext,ApplicationDbContext>();
         return services;
     }
 }
