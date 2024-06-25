@@ -7,7 +7,7 @@ public class OrderingDataGenerator
     private static ApplicationDbContext _applicationDbContext;
     public OrderingDataGenerator(ApplicationDbContext dbContext)
     {
-        _applicationDbContext = dbContext;
+        _applicationDbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
     public static Faker<Product> GetProductFaker()
     {
