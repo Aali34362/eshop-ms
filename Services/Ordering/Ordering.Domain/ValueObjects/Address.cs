@@ -18,6 +18,7 @@ public record Address
         AddressLine = addressLine;
         Country = country;
         ZipCode = zipCode;
+        State = state;
     }
 
     public static Address Of(string firstName, string lastName, string emailAddress, string addressLine, string country, string state, string zipCode)

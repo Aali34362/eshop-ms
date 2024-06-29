@@ -1,3 +1,9 @@
+using Catalog.API.Utilities;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Net;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var assembly = typeof(Program).Assembly;
@@ -80,4 +86,38 @@ app.UseExceptionHandler(
     }
     );
 
+app.MapHealthChecks("/healthz", new HealthCheckOptions
+{
+    ResponseWriter = WriteResponse
+});
+
+
+
 app.Run();
+
+
+
+static async Task WriteResponse(HttpContext context, HealthReport report)
+{
+    context.Response.ContentType = "application/json";
+
+    HealthCheckResponse value = new HealthCheckResponse
+    {
+        Status = report.Status.ToString(),
+        Checks = report.Entries.Select((KeyValuePair<string, HealthReportEntry> x) => new HealthCheck
+        {
+            Component = x.Key,
+            Status = x.Value.Status.ToString(),
+            Description = x.Value.Description,
+            Duration = x.Value.Duration
+        }),
+        Duration = report.TotalDuration
+    };
+
+    if (value.Status == HealthStatus.Unhealthy.ToString())
+    {
+        context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
+    }
+
+    await context.Response.WriteAsync(JsonSerializer.Serialize(value));
+}
