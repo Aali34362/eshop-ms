@@ -19,6 +19,6 @@ var app = builder.Build();
 app.UseWebService();
 if (app.Environment.IsDevelopment())
 {
-    await app.InitialiseDatabaseAsync();
+    ////await app.InitialiseDatabaseAsync();
 }
 app.Run();

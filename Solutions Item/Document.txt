@@ -2172,3 +2172,31 @@ Overall System's reaction to certain domain events
 Asynchronously, sent with a message broker over a queue
 Example After handling orderplaced event an OrderPlacedIntegrationEvent might be published to a message broker like RabbitMQ, then consumes by other Microservices.
 
+------------------------------------------------------------------------
+
+EF core Interceptors: SaveChangesInterceeptor for Auditing Entites
+    Interceptors in EF Core enable the interception, modification, or
+    suppression of EF Core operations
+    This includes low-level database operations such as executing a command
+    as well as higher-level operations, suct as calls to SaveChanges.
+SaveChanges Interception:
+    The SaveChanges and SaveChangesAsync interception point are used to execute custom
+    logic when saving changes to the database.
+    These interception points are defined by the ISaveChangesInterceptior interfaces.
+    EF Core provides a SaveChangesInterceptor base class with no-op(no operation) methods as a convenience
+
+Use Case: SaveChanges interception for Auditing
+    Interception of SaveChanges can be used to create an independent audit record of changes.
+    This is useful for maintaining a history of who changed an entity and when.
+    Before saving changes to the database, you can iterate through the changd entities in the DBContext and log or store the 
+
+Registering Interceptors
+    How to Register Interceptors?
+    Interceptors are registered using AddInterceptors when Congfiguring a DbContext instance.
+    Common approach is usually done in the OnConfiguring method of the DbContext.
+    Example Code: Registering a SaveChangesInterceptor.
+
+Implementing a Custome SaveChangesInterceptor:
+    Implement a custom interceptor by extending SaveChangesInterceptor or implementing ISaveChangesInterceptor.
+    Override methods like SavingChanges and SavedChanges to execute custom logic.
+    
