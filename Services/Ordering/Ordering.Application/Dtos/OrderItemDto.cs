@@ -1,5 +1,8 @@
 ﻿namespace Ordering.Application.Dtos;
 
-public class OrderItemDto
-{
-}
+public record OrderItemDto(
+    Guid OrderId,
+    Guid ProductId,
+    int Quantity,
+    decimal Price);
+

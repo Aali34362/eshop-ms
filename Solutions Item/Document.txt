@@ -2261,6 +2261,27 @@ Separation of concerns principles: separate reading db and writing db with 2 db.
             Data will be denormailzed into materialized view db for querying from the application.
             This process is called Eventual Consistency Principle
 
+Logical and Physical Implementation of CQRS:
+Logical Implementation of CQRS :
+    Splitting Operations, Not Databases. Separate the read(query) operation from the write(command) operations at the code level but not necessarily at the db level.
+    Even though the same db is used, the paths for reading and writing data are distinct.
 
+Physical Implementation of CQRS:
+    Separate Databases. Splitting the read and write operations not just at the code level but also physically using separate databases
+    introduces data consistency and synchronization problems.
+
+Commands: 
+    Change the state of the system. encapsulates the data required for a specific action.
+Commands Handlers: 
+    Each command has a corresponding handler.
+    The handler interacts with the domain model and persists changes.
+Executes business logic and updates the state through repositories.
+
+MediatR: is a popular .Net library used to implement the mediator pattern, which is a great fit for CQRS.
+IRequest interface is used to define a request, which can be either a command or a query. the return type of the request can be specified as a generic parameter.
+Handler inherits from IRequestHandler<TRequest, TResponse>, where TRequest is the type of the command or query, and TResponse is the return type.
+To make the distinction between commands and queries clearer, you can define two custom interfaces: ICommand and IQuery.
+    public interface ICommand<TResult> : IRequest<TResult>{}
+    public interface IQuery<TResult> : IRequest<TResult>{}
 
 
