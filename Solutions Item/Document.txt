@@ -2285,3 +2285,7 @@ To make the distinction between commands and queries clearer, you can define two
     public interface IQuery<TResult> : IRequest<TResult>{}
 
 
+
+
+
+
