@@ -2246,4 +2246,21 @@ Separation of concerns principles: separate reading db and writing db with 2 db.
     System can increased query performance and scale db independently.
 
 
+    Eventual Consistency Principle:
+        CQRS with Event Sourcing Pattern leads Eventual COnsistency.
+        Eventual Consistency is especially used for systems that prefer high availability to strong consistency.
+        The system will become constent after a certain time.
+        We called this latency is a Eventual Consistency Principle and Offers to be consistent after a certain time.
+        There are 2 type of Consistency Level:
+            Strict Consistency: When we save data, the data should affect and seen immediately for every client.
+            Eventual Conssitency: When we write any data, it will take some time for clients reading the data.
+
+        CQRS Design and Event Sourcing Patterns:
+            When user perform any action into application, this will save actions as a event into event store.
+            Data will convert to reading db with following the publish/subscribe pattern with using message brokers.
+            Data will be denormailzed into materialized view db for querying from the application.
+            This process is called Eventual Consistency Principle
+
+
+
 
