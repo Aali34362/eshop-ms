@@ -2200,3 +2200,50 @@ Implementing a Custome SaveChangesInterceptor:
     Implement a custom interceptor by extending SaveChangesInterceptor or implementing ISaveChangesInterceptor.
     Override methods like SavingChanges and SavedChanges to execute custom logic.
     
+
+-------------------------------------------------------------------
+
+CQRS:
+It is design pattern in order to avoid complex queries to get rid of inefficient joins.
+Separates read and write operations with separating database.
+Commands: Changing the state of data into application.
+Queries: Handlling complex join operations and returning a result and dont change the state of data into application.
+Large-scaled microservices architectures needs to manage high-volume data requirements.
+Single database for services can cause bottlenecks.
+Uses both CQRS and Event Sourcing patterns to improve application performance.
+CQRS offers to separates read and write data that provides to maximize query performance and scalability.
+
+
+Monolithic has single db is both working for complex join queries, and also perform CRUD operations.
+When application goes more complex, this query and CRUD operations will become un-manageable situation.
+Application required some query that needs to join more than 10 table, will lock the DB due to latency of query computation.
+Performing CRUD operations need to make complex validations and process long business logics, will cause to lock db operations.
+Reading and writing dn has different approaches define different strategy.
+Separation of concerns principles: separate reading db and writing db with 2 db.
+    Read db uses No-Sql db with denirmalized data
+    Write db uses relational db with fully normalized and support strong data consistency.
+
+
+    Event Sourcing Pattern :
+    Most applications save data into db with the current state of the entity. i.e user changes the email address table, email field updated with the latest updated one. Always know the lastest status of the data.
+    In large-scaled architectures, frequent update database operations can negatively impact datbase performance, responsiveness, and limits of scalability.
+    Event Sourcing pattern offers to persist each action that affects to data into Event Store database. And call all these action as a event.
+    Instead of saving latest status of data into database, event sourcing pattern offers to save all events into db with sequential ordered of data events.
+    This events database called Event Store.
+    Instead of overriding the data into table, it create a new record for each change to data and it becomes sequential list of past events.
+    Event Store database become the source of truth of data.
+    Sequential Event list using for generating Materialized Views that represents final state of data to perform queries.
+    Event store convert to read db with following the Materialized View Pattern.
+    Convert operation can handle by publish/Subscribe pattern with publish event with message broker systems.
+    Event list gives ability to replay events at given certain timestamp.
+
+    CQRS pattern is mostly using with the Event Sourcing pattern.
+    Store events into the write db source-of-truth events db.
+    Read db of CQRS pattern provides materialized views of the data with denormalized tables.
+    Materialized views read db consumes events from write db convert them into denormalized views.
+    The writing db is never save status of data only events actions are stored.
+    Store history of data and able to reply any point of time in order to re=generate status of data.
+    System can increased query performance and scale db independently.
+
+
+
