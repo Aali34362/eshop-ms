@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Base.Behavior.Behaviors;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Ordering.Application;
@@ -9,8 +10,10 @@ public static class DependencyInjection
     {
         services.AddMediatR(cfg => 
         {
-            cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()); 
-            });
+            cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+            cfg.AddOpenBehavior(typeof(ValidationBehaviors<,>));
+            cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+        });
         return services;
     }
 }
