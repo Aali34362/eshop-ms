@@ -27,3 +27,4 @@ public class GetOrdersHandler(IApplicationDbContext dbContext)
                 totalCount,
                 orders.ToOrderDtoList()));
     }
+}
