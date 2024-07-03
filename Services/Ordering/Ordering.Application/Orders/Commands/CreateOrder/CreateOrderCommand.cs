@@ -1,4 +1,4 @@
-﻿namespace Ordering.Application.Orders.Commands.CreateOrder;
+﻿namespace Ordering.Application.Orders.Commands;
 
 public record CreateOrderCommand
     (OrderDto Order) 

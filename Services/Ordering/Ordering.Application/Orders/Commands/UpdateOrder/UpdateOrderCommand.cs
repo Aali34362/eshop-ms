@@ -1,4 +1,4 @@
-﻿namespace Ordering.Application.Orders.Commands.UpdateOrder;
+﻿namespace Ordering.Application.Orders.Commands;
 
 public record UpdateOrderCommand(OrderDto Order)
     : ICommand<UpdateOrderResult>;

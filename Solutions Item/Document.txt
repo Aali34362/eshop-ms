@@ -2286,6 +2286,17 @@ To make the distinction between commands and queries clearer, you can define two
 
 
 
+------------------------------------------------------------
+
+REPR:
+Developing API Endpoints implementing a simple Request EndPoint Response flow.
+REPR stands for Request, EndPoint, Response - a pattern simplifying the development of REST API Endpoints.
+REPR Design Pattern defines web API endpoints as having components.
+REQUEST - Data structure the endpoint expects.
+ENDPOINT - Logic the endpoint performs given a request.
+RESPONSE - Data structure the endpoint returns.
+
+Simplified concepts to enable the development REST API endpoints and enforcing the Single Responsibility Principle for endpoints.
 
 
 
