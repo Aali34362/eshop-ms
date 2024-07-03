@@ -19,6 +19,12 @@ var app = builder.Build();
 app.UseWebService();
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order");
+        c.RoutePrefix = string.Empty;  // To serve the Swagger UI at the app's root
+    });
     ////await app.InitialiseDatabaseAsync();
 }
 app.Run();

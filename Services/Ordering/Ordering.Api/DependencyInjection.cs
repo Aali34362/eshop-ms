@@ -4,6 +4,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebService(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
         services.AddCarter();
         services.AddExceptionHandler<CustomExceptionHandler>();
         services.AddHealthChecks()
