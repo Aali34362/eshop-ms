@@ -34,13 +34,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Packaged\BaseMessaging\MassTransitMQ\MassTransitMQ.csproj" />
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Behavior\Base.Behavior.csproj" />
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Exceptions\Base.Exceptions.csproj" />
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base\Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
     <Folder Include="GrpcServices\" />
   </ItemGroup>
 

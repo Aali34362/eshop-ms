@@ -21,3 +21,7 @@ global using Marten.Schema;
 global using Microsoft.Extensions.Caching.Distributed;
 global using System.Text.Json;
 global using Discount.Grpc;
+global using MassTransitMQ.MassTransit;
+global using Basket.Api.Dtos;
+global using MassTransitMQ.Events;
+global using MassTransit;

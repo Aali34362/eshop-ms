@@ -53,6 +53,9 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
         return handler;
     });
 
+//Async Communication Services
+builder.Services.AddRabbitMQMessageBroker(builder.Configuration);
+
 //Cross-Cutting Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
