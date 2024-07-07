@@ -2300,3 +2300,114 @@ Simplified concepts to enable the development REST API endpoints and enforcing t
 
 
 
+------------------------------------------------------------------------------------------
+
+Microservices Asynchronous Communication
+
+The client sends a request but it doesnt wait for a response from the service.
+The client should not have blocked a thread while waiting for a response.
+AMQP(Advanced Message Queuing Protocol)
+Using AMQP protocols, the client sends the message with using message broker systems like Kafka and RabbitMQ queue.
+The message producer does not wait for response.
+Message consume from the subscriber systems in async way, and no one waiting for response suddenly.
+if there is busy interactions in communication across multiple microservices, then use asynchronous messaging platforms.
+Message brokers are responsible for handling the message sent by the producer service in async messaging-based communication.
+If the consumer service is down at the moment, the broker might be configured to retry as long as necessary for successful delivery.
+Messages can be persisted if required or stored only in memory.
+Message broker is responsible for delivering the message.
+
+Benefit:
+    New Subscriber Services:
+    Adding new services is very simple.
+    We can easily subscribe to message that we want to receive.
+    The producer doesnt need to be know about subscribers, we can remove and add subscribers without affecting producer service.
+    
+    Scalability:
+    With async communications we can easier to manage scalability issues, can scale producer, consumer and message broker system independently.
+    Scale services according to incoming messages into event bus system.
+    Kubernetes KEDA Auto-scalers.
+    
+    Event-driven Microservices:
+    With async communication, we can provide event-driven architectures which is best way to communicate between microservices.
+
+Challenges:
+    Single Point of Failure - Message Broker
+        The message broker becomes a single point of failure.
+        We should not rely of all communicationw ith a single node of message brokers,
+        instead we should scale it and use hybrid communication with sync and async in your cases.
+    
+    Debugging:
+        Difficult to debug issues with async communication, it can be hard to trace the flow of a single operation across service boundaries.
+        debugging of the flow and the payload of events takes so many times and hard to debug at the same time.
+    
+    At-least-once delivery and Not Guarantee an order of message:
+        Mostly Brokers use at least once delivery and not Guarantee order of messages.
+        Should embrace these message delivery mechanism with applying idempotency consumers and not designing FIFO requires cases.
+
+Fan-Out and Message Filtering with Pub?Sub Pattern:
+    Fan-out is a messaging pattern; 'fanned out' to multiple destination in parallel.
+    Each of destinations can work and process this messages in parallel.
+    Pub/Sub model to define a tropic which is logical access point to enabling message communication with asynchronously.
+    Pub sends the message to the topic, message is immediatetly fanned out to all subscribers of this topic.
+    Each service can operate and scale independently and individually that completely decoupled ans asyncronously.
+    The publisher and subscribers dont need to know who is publishing / counsuming this message that is broadcasting.
+    Deliver the same message to multiple receivers is to use the Fanout Pub/Sub messaging Pattern.
+
+Pub/Sub Messaging Pattern :
+    Pub/Sub messaging is a form of asynchronous service-to-service communication.
+    Any message published to a topic is immediately received by all of the subscribers to the topic
+    Enable event-driven architectures, and decouple applications to increase performance, reliability and scalability
+    Applications are decoupled into smaller, independent building blocks that are easier to develop, deploy and maintain.
+    Pub/Sub messaging provides instant event notifications for these distributed applications.
+    A message topic provides a lightweight mechanism to broadcast asynchronous event notifications.
+
+Event-Driven Microservices Architecture:
+    Event-drivern microservices architecture, services communicate with each other by publishing asn subscribing to events.
+    When a service needs to communicate with another service, it publishes an event to a message queue or event bus.
+    Other Services can then subscribe to that event and take appropriate action when the event is received.
+    Asynchronous communication:
+        Allows services to communicate asynchronously.
+        Service can publish an event and continue processing without waiting for a response from the other service.
+    Decoupled communication:
+        Decouples the publisher and subscriber, allows t evolve independently without affecting each other.
+    Real-time processing:
+        Support real-time processing, as events are published and consumed as soon as they occur.
+        Need to react to events in real-time, such as in systems that use CDC to track changes to a database.
+    High volume events:
+        Well-suited to handling high volume events, as they can sale horizontally by adding more event consumers as need.
+        Can be scaled independently to handle increased load.
+
+Rabbit MQ:
+    It is mesage broker software that implements the Advanced Message Queuing Protocol(AMQP).
+    It allows applications to communicate with each other by sending and receiving messages through queues.
+    It is message queuing system that transmit a message received from any source to another source.
+    Similar one can be listed as Kafka, MSMQ, Azure service bus, Kestrel, ActiveMQ.
+    All transactions can be listed in a queue until the source to be transmitted gets up.
+    It allows to send and receive messages asynchronously.
+    it support for multiple operating systems and open source code is one of the most preferred reasons.
+
+Rabbit MQ Exchange Types:
+    It provides four types of exchanges: Direct, Fanout,Topic, and Headers.
+
+    Direct Exchange:
+        Uses of a single queue is being addressed.
+        The most appropriate queue is reached with the relevant direct exchange.
+    Topic Exchange:
+        Messages are sent to different queues according to their subject.
+        Incoming message is classified and sent to the related queue.
+    Variation of the Pub/Sub pattern:
+        topic echange should be used to determine what kind of message they want to receive.
+    Fanout Exchange:
+        Used in situations where the message should be sent to more than one queue.
+        Especially applied in BroadCasting systems.
+        Mainly used for games for global announcements.
+    Headers Exchange:
+        Guided by the features added to the header of the message.
+        Routing-key used in other models is not used.
+        Transmits to the correct queue with a few features and descriptions in message headers.
+        The attributes on the header and the attributes on the queue must match each other's values.
+
+
+
+
+
