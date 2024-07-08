@@ -1,12 +1,8 @@
-﻿using Base.Behavior.Behaviors;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-
-namespace Ordering.Application;
+﻿namespace Ordering.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationService(this IServiceCollection services)
+    public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatR(cfg => 
         {
@@ -14,6 +10,7 @@ public static class DependencyInjection
             cfg.AddOpenBehavior(typeof(ValidationBehaviors<,>));
             cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
+        services.AddRabbitMQMessageBroker(configuration, Assembly.GetExecutingAssembly());
         return services;
     }
 }

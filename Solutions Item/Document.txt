@@ -2432,6 +2432,18 @@ Duel Write Problem
         The second step is to receive these events written to the OutBox table by an independent service and write them to the Event bus. 
         Another service listen and polls the Outbox table records and publish events.
 
+Saga Pattern for Distrubuted Transactions:
+    Saga design pattern is provide to manage data consistency across microservices in distributed transaction cases.
+    Saga offers to create a set of transactions that update microservices squentially and publish events to trigger the next transaction for the next microservices.
+    If one of the step is failed, than safa patterns trigger to rollback transactions, do reverse operations with publishing rollback events to previous microservices.
+    Publish/Subscribe pattern with brokers or API composition.
+    Saga pattern managa long-running transactions that involve multiple microservices which is series of local transactions that work together to achieve E2E use case.
+    Useful in distributed systems, where multiple microservices need to coordinate their actions.
+    Ensure that the overall transaction is either completed successfully or is rolled back to its inital state.
+    Saga pattern provides transaction management with using a sequence of local transaction of microserivces. And grouping these local transactions and sequentially invoking one by one.
+    Each local transaction updates the db and publishes an event to trigger the next local transaction.
+    If one of the step is failed then saga patterns trigger to rollback transactions.
+
 
 
 

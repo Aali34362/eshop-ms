@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Packaged\BaseMessaging\MassTransitMQ\MassTransitMQ.csproj" />
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Behavior\Base.Behavior.csproj" />
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Exceptions\Base.Exceptions.csproj" />
     <ProjectReference Include="..\..\..\Packaged\BasePackage\Base.Extensions\Base.Extensions.csproj" />
