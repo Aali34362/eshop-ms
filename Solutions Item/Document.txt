@@ -2407,6 +2407,30 @@ Rabbit MQ Exchange Types:
         Transmits to the correct queue with a few features and descriptions in message headers.
         The attributes on the header and the attributes on the queue must match each other's values.
 
+Duel Write Problem
+    When application needs to change data in two different systems, i.e a database and a message queue, if one of the writes fails, it can result in inconsistent data.
+    Happens when you use a local transaction with each of the external systems operations.
+    I.e app needs to persist data in the database and send a message to Kafka for notifying other systems.
+    If one of these two operations fails, the data will be inconsistent data and these two systems becomes inconsistent
+
+    Problems :
+        Data loss or corruption.
+        Difficult to resolve with out proper error handling and recovery mechanisms.
+        Dual writes can be hard to detect and fix.
+
+    Transactional OutBox Pattern:
+        The idea is to have an "Outbox" table in the microservice's db. It provides to publish events reliably.
+        Dual write problem happens when application needs to change data in two different systems.
+        Instead of sending the data to two separate locations, send a single transaction that will stoe two separate copies of the data on the db.
+        One copy is tored in the relevant db table, and the other copy is stored in an outbox table that will publish to event bus.
+        When API publishes event messages, it doesnt directly send them, Instead the messages are persisted in a db table.
+        After that a job publish events to message broker system in predefined time intervals.
+        Events are not written directly to a event bus, it is written to a table in the "Outbox" role of the service.
+        Transaction performed before the event and the event written to the outbox table are part of the same transaction.
+        When a new order is added to the system, the process of adding the order and writing the Order_created event to the Outbox table is done in the same transaction to ensure the event is saved to db.
+        If one of the process is fail, this will rollback the whole operation with the following ACID principles.
+        The second step is to receive these events written to the OutBox table by an independent service and write them to the Event bus. 
+        Another service listen and polls the Outbox table records and publish events.
 
 
 
