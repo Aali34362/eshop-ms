@@ -1,4 +1,6 @@
-﻿namespace Ordering.Application;
+﻿using Microsoft.FeatureManagement;
+
+namespace Ordering.Application;
 
 public static class DependencyInjection
 {
@@ -10,6 +12,7 @@ public static class DependencyInjection
             cfg.AddOpenBehavior(typeof(ValidationBehaviors<,>));
             cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
+        services.AddFeatureManagement();
         services.AddRabbitMQMessageBroker(configuration, Assembly.GetExecutingAssembly());
         return services;
     }

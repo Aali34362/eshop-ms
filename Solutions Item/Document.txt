@@ -2445,5 +2445,15 @@ Saga Pattern for Distrubuted Transactions:
     If one of the step is failed then saga patterns trigger to rollback transactions.
 
 
+Asp.net Feature Management for Feature Flags:
+    Feature Flags are a powerful technique, allowing teams to modify system behavior without changing code.
+    They enable functionalities to be turned on or off dynamically, providing flexibility in deploymen and testing.
+    Asp.net core supports feature management, integrating seamlessly with the existing congfiguration system.
+    Microsoft.FeatureManagement.AspNetCore a nuget pacakge that offers a streamlined approach to implement feature flags.
+    Why use Feature flags for "OrderFulfillment"?
+    Problem : Unnecessary event-messages in RabbitMq and premature triggering of order fulfillment processes.
+    Solutions: Implement a feature flag for the OrderFulfilliment event allowing it to be enabled or disabled based on the readiness of other microservices.
+
+
 
 
